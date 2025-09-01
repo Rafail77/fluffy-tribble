@@ -15,7 +15,7 @@
 
 <body>
 
-  <table>
+  <table id="reportTable"> <!-- добавлено id, чтобы JS мог найти конкретную таблицу -->
     <tr>
       <!-- Первая строка-заголовок (объединённые ячейки B:J и K:M) -->
       <td colspan="10" class="header">Report on the work carried out for August 2025 in Astana. Compiled by the Representative of the DB Khusainov R.R.</td>
@@ -114,13 +114,16 @@
       <td></td>
     </tr>
 
-    <!-- Строка ИТОГО -->
+        <!-- Строка ИТОГО (JS будет вставлять сюда сумму) -->
     <tr>
       <td colspan="10" class="total">TOTAL:</td>
-      <td colspan="2" class="money total">1 473 775,00 ₸</td>
+      <td colspan="2" id="totalCell" class="money total">0 ₸</td>
       <td></td>
     </tr>
-  </table>
+
+</table>
+
+<script src="script.js"></script>
 
 </body>
 </html>
