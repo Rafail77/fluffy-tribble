@@ -1,0 +1,32 @@
+    table {
+      width: 100%;                        /* Таблица занимает всю ширину окна */
+      border-collapse: collapse;          /* Убираем двойные границы */
+      font-family: Arial, sans-serif;     /* Шрифт для текста */
+      font-size: 14px;                    /* Размер текста */
+    }
+
+    th, td {
+      border: 1px solid black;            /* Чёрные границы ячеек */
+      padding: 5px;                       /* Внутренние отступы */
+      vertical-align: top;                /* Текст прижат к верху */
+    }
+
+    .header { 
+      background-color: yellow;           /* Жёлтый фон для шапки */
+      font-weight: bold;                  /* Жирный текст */
+      text-align: center;                 /* Выравнивание текста по центру */
+    }
+
+    .money { 
+      text-align: right;                  /* Цифры по правому краю */
+      white-space: nowrap;                /* Запрещаем перенос суммы */
+    }
+
+    .total { 
+      font-weight: bold;                  /* Жирный текст для ИТОГО */
+      background-color: #f2f2f2;          /* Светло-серый фон */
+    }
+
+    .red { 
+      color: red;                         /* Красный текст (как в Excel) */
+    }

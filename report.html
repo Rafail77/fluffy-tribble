@@ -1,0 +1,126 @@
+<!DOCTYPE html> <!-- Сообщаем браузеру, что это HTML5 -->
+<html lang="en"> <!-- Атрибут lang задаёт язык документа (можно "ru") -->
+<head>
+   <meta charset="UTF-8"> <!-- Правильная кодировка UTF-8 -->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для мобильных -->
+   <title>Flexbox_4.4</title> <!-- Заголовок страницы (виден во вкладке браузера) -->
+
+   <!-- Подключение своего CSS -->
+   <link rel="stylesheet" href="styles.css">
+
+   <!-- Подключение шрифтов Google Fonts -->
+   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet"> <!-- Playfair Display и Roboto -->
+   <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet"> <!-- DM Sans -->
+</head>
+
+<body>
+
+  <table>
+    <tr>
+      <!-- Первая строка-заголовок (объединённые ячейки B:J и K:M) -->
+      <td colspan="10" class="header">Отчёт о проведенной работе за Август 2025г по г.Астана. Составил Представитель ДБ Хусаинов Р.Р.</td>
+      <td colspan="3" class="header">уволенные, наказанные, депремированные</td>
+    </tr>
+
+    <tr>
+      <th>дни месяца</th> <!-- Заголовок первой колонки -->
+      <th colspan="9">проведенная работа</th> <!-- Заголовок второй колонки (объединение) -->
+      <th colspan="2">сумма возмещения</th> <!-- Заголовок суммы -->
+      <th>уволенные и др.</th> <!-- Последняя колонка -->
+    </tr>
+
+    <!-- Далее строки с данными -->
+    <tr>
+      <td>1</td>
+      <td colspan="9">погашение Ревизии Астана24, А240000047 от 17.07.25;</td>
+      <td colspan="2" class="money">36 740,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td colspan="9" class="red">СЗ попут, Нур-Султан1 27.08.25; кандидат на ПК Нур-Султан1 Крят Руслан Андреевич;</td>
+      <td colspan="2" class="money red">804 980,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td colspan="9" class="red">погашение Ревизии Нур-Султан1, №S10000145;</td>
+      <td colspan="2" class="money red">25 795,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>5</td>
+      <td colspan="9">Погашение Ревизии №А240000047 от 17.07.25 при увольнении ПК Астана24 Имирова Армана Куатжановича</td>
+      <td colspan="2" class="money">18 370,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>11</td>
+      <td colspan="9">кандидат СЕНЧЕНКОВ МАКСИМ НИКОЛАЕВИЧ на ПК в маг.Нур-Султан1</td>
+      <td colspan="2"></td>
+      <td>Не прошел проверку. 8 Испол</td>
+    </tr>
+
+    <tr>
+      <td>14</td>
+      <td colspan="9">контрагент TOO "TTL Qaz";<br>контрагент Частная компания "Apicore Ltd"; кандидаты ПК Астана24 ТӨЛЕУ БЫҚЫЛАС НУРБЕКҰЛЫ, МҰҚТАҒАН</td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>19</td>
+      <td colspan="9">СЗ бой ТМЦ во время доставки. ППО 10300368 от 11.08.25;</td>
+      <td colspan="2" class="money">58 600,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>20</td>
+      <td colspan="9">кандидаты на ПК Астана24 МУКАШЕВА АКЕРКЕ ХАЙРУЛЛАЕВНА, на ПК Нур-Султан1 ДАИРБАЕВ ТАМЕРЛАН;</td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>21</td>
+      <td colspan="9">Погашение Ревизии №N510000163 от 13.08.25, Нур-Султан1;</td>
+      <td colspan="2" class="money">61 694,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>22</td>
+      <td colspan="9">кандидат на ПК Астана24 РАМАНОВ ЕЛАМАН БАГДАТУЛЫ;</td>
+      <td colspan="2"></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>26</td>
+      <td colspan="9">СЗ, нарушение использования бонусов в маг.Нур-Султан1;</td>
+      <td colspan="2" class="money">78 926,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>31</td>
+      <td colspan="9" class="red">СЗ кража ноутбука, Астана24, 23.12.2021г (добавлено Заявление в Региональную палату частных судебных испол.)</td>
+      <td colspan="2" class="money red">388 670,00 ₸</td>
+      <td></td>
+    </tr>
+
+    <!-- Строка ИТОГО -->
+    <tr>
+      <td colspan="10" class="total">ИТОГО:</td>
+      <td colspan="2" class="money total">1 473 775,00 ₸</td>
+      <td></td>
+    </tr>
+  </table>
+
+</body>
+</html>
