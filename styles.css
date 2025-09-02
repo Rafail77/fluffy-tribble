@@ -1,33 +1,36 @@
+/* ---- БАЗОВЫЕ СТИЛИ ТАБЛИЦЫ ---- */
     table {
-      width: 100%;                        /* Таблица занимает всю ширину окна */
-      border-collapse: collapse;          /* Убираем двойные границы */
-      font-family: Arial, sans-serif;     /* Шрифт для текста */
-      font-size: 14px;                    /* Размер текста */
+      width: 100%;              /* таблица на всю ширину */
+      border-collapse: collapse;/* убираем двойные линии */
+      margin-top: 20px;         /* отступ сверху */
+      font-family: Arial, sans-serif; /* читаемый шрифт */
+      font-size: 14px;          /* размер текста */
     }
 
     th, td {
-      border: 1px solid black;            /* Чёрные границы ячеек */
-      padding: 5px;                       /* Внутренние отступы */
-      vertical-align: top;                /* Текст прижат к верху */
+      border: 1px solid #444;   /* тонкая чёрная рамка */
+      padding: 6px;             /* внутренний отступ */
+      vertical-align: top;      /* выравнивание текста по верхнему краю */
     }
 
-    .header { 
-      background-color: yellow;           /* Жёлтый фон для шапки */
-      font-weight: bold;                  /* Жирный текст */
-      text-align: center;                 /* Выравнивание текста по центру */
+    .header {
+      background: #f0e68c;      /* жёлтый фон для заголовков */
+      font-weight: bold;        /* жирный текст */
+      text-align: center;       /* по центру */
     }
 
-    .money { 
-      text-align: right;                  /* Цифры по правому краю */
-      white-space: nowrap;                /* Запрещаем перенос суммы */
+    .red {
+      color: red;               /* красный текст для важных строк */
+      font-weight: bold;        /* делаем жирным */
     }
 
-    .total { 
-      font-weight: bold;                  /* Жирный текст для ИТОГО */
-      background-color: #f2f2f2;          /* Светло-серый фон */
+    .money {
+      text-align: right;        /* суммы выравниваем по правому краю */
+      white-space: nowrap;      /* не переносить валюту на другую строку */
     }
 
-    .red { 
-      color: red;                         /* Красный текст (как в Excel) */
+    .total {
+      background: #eee;         /* серый фон у итоговой строки */
+      font-weight: bold;        /* жирный текст */
     }
 

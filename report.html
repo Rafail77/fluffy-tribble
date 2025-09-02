@@ -15,112 +15,51 @@
 
 <body>
 
-  <table id="reportTable"> <!-- добавлено id, чтобы JS мог найти конкретную таблицу -->
-    <tr>
-      <!-- Первая строка-заголовок (объединённые ячейки B:J и K:M) -->
-      <td colspan="10" class="header">Report on the work carried out for August 2025 in Astana. Compiled by the Representative of the DB Khusainov R.R.</td>
-      <td colspan="3" class="header">dismissed, punished, deprived of bonuses</td>
-    </tr>
+<table id="reportTable">
+  <tr>
+    <!-- Первая строка-заголовок -->
+    <td colspan="10" class="header">Report on the work carried out for August 2025 in Astana. Compiled by the Representative of the DB Khusainov R.R.</td>
+    <td colspan="3" class="header">dismissed, punished, deprived of bonuses</td>
+  </tr>
 
-    <tr>
-      <th>days of the month</th> <!-- Заголовок первой колонки -->
-      <th colspan="9">work done</th> <!-- Заголовок второй колонки (объединение) -->
-      <th colspan="2">amount of compensation</th> <!-- Заголовок суммы -->
-      <th>dismissed, etc.</th> <!-- Последняя колонка -->
-    </tr>
+  <tr>
+    <!-- Вторая строка-заголовок -->
+    <th>days of the month</th>
+    <th colspan="9">work done</th>
+    <th colspan="2">amount of compensation</th>
+    <th>dismissed, etc.</th>
+  </tr>
 
-    <!-- Далее строки с данными -->
-    <tr>
-      <td>1</td>
-      <td colspan="9">repayment of Revision Astana24, A240000047 dated 17.07.25;</td>
-      <td colspan="2" class="money">36 740,00 ₸</td>
-      <td></td>
-    </tr>
+  <!-- Здесь идут ваши строки с данными, но JS их потом удалит и пересоберёт -->
+  <tr>
+    <td>1</td>
+    <td colspan="9">repayment of Revision Astana24, A240000047 dated 17.07.25;</td>
+    <td colspan="2" class="money">36 740,00 ₸</td>
+    <td></td>
+  </tr>
 
-    <tr>
-      <td>2</td>
-      <td colspan="9" class="red">NW flood, Nur-Sultan1 08/27/25; candidate for PC Nur-Sultan1 Kryat Ruslan Andreevich;</td>
-      <td colspan="2" class="money red">804 980,00 ₸</td>
-      <td></td>
-    </tr>
+  <tr>
+    <td>2</td>
+    <td colspan="9" class="red">NW flood, Nur-Sultan1 08/27/25; candidate for PC Nur-Sultan1 Kryat Ruslan Andreevich;</td>
+    <td colspan="2" class="money red">804 980,00 ₸</td>
+    <td></td>
+  </tr>
 
-    <tr>
-      <td>3</td>
-      <td colspan="9" class="red">repayment of Revision Nur-Sultan1, No. S10000145;</td>
-      <td colspan="2" class="money red">25 795,00 ₸</td>
-      <td></td>
-    </tr>
+  <!-- ... (остальные строки с вашими данными) ... -->
 
-    <tr>
-      <td>5</td>
-      <td colspan="9">Repayment of Audit No. A240000047 dated 17.07.25 upon dismissal of Astana24 PC Imirov Arman Kuatzhanovich</td>
-      <td colspan="2" class="money">18 370,00 ₸</td>
-      <td></td>
-    </tr>
+  <tr>
+    <td>31</td>
+    <td colspan="9" class="red">SZ laptop theft, Astana24, 12/23/2021 (Added Application to the Regional Chamber of Private Judicial Enforcement)</td>
+    <td colspan="2" class="money red">388 670,00 ₸</td>
+    <td></td>
+  </tr>
 
-    <tr>
-      <td>11</td>
-      <td colspan="9">candidate SENCHENKOV MAXIM NIKOLAEVICH on the PC in the Nur-Sultan magistracy1</td>
-      <td colspan="2"></td>
-      <td>Failed verification. 8 Executive</td>
-    </tr>
-
-    <tr>
-      <td>14</td>
-      <td colspan="9">counterparty TTL Qaz LLP;<br>counterparty Private company "Apicore Ltd"; candidates PC Astana24 TӨLEU BYҚYLAS NURBEKULY, MҰҚTAҒAN</td>
-      <td colspan="2"></td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>19</td>
-      <td colspan="9">SZ combat of inventory items during delivery. PPO 10300368 from 11.08.25;</td>
-      <td colspan="2" class="money">58 600,00 ₸</td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>20</td>
-      <td colspan="9">candidates for PC Astana24 MUKASHEVA AKERKE KHAIRULLAEVNA, for PC Nur-Sultan1 DAIRBAYEV TAMERLAN;</td>
-      <td colspan="2"></td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>21</td>
-      <td colspan="9">Repayment of Revision No. N510000163 dated 13.08.25, Nur-Sultan1;</td>
-      <td colspan="2" class="money">61 694,00 ₸</td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>22</td>
-      <td colspan="9">candidate for PC Astana24 RAMANOV ELAMAN BAGDATULY;</td>
-      <td colspan="2"></td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>26</td>
-      <td colspan="9">SZ, violation of the use of bonuses in the store Nur-Sultan1;</td>
-      <td colspan="2" class="money">78 926,00 ₸</td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>31</td>
-      <td colspan="9" class="red">SZ laptop theft, Astana24, 12/23/2021 (Added Application to the Regional Chamber of Private Judicial Enforcement)</td>
-      <td colspan="2" class="money red">388 670,00 ₸</td>
-      <td></td>
-    </tr>
-
-        <!-- Строка ИТОГО (JS будет вставлять сюда сумму) -->
-    <tr>
-      <td colspan="10" class="total">TOTAL:</td>
-      <td colspan="2" id="totalCell" class="money total">0 ₸</td>
-      <td></td>
-    </tr>
-
+  <!-- Итоговая строка -->
+  <tr>
+    <td colspan="10" class="total">TOTAL:</td>
+    <td colspan="2" id="totalCell" class="money total">0 ₸</td>
+    <td></td>
+  </tr>
 </table>
 
 <script src="script.js"></script>
