@@ -1,68 +1,43 @@
-<!DOCTYPE html> <!-- Сообщаем браузеру, что это HTML5 -->
-<html lang="en"> <!-- Атрибут lang задаёт язык документа (можно "ru") -->
+<!DOCTYPE html> <!-- Указываем стандарт HTML5 -->
+<html lang="en"> <!-- Атрибут языка -->
 <head>
-   <meta charset="UTF-8"> <!-- Правильная кодировка UTF-8 -->
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для мобильных -->
-   <title>Report for August 2025</title> <!-- Заголовок страницы (виден во вкладке браузера) -->
+  <meta charset="UTF-8"> <!-- Кодировка UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Адаптив для мобильных -->
+  <title>Report for September 2025</title> <!-- Заголовок во вкладке браузера -->
 
-   <!-- Подключение своего CSS -->
-   <link rel="stylesheet" href="styles.css">
+  <!-- Подключение CSS -->
+  <link rel="stylesheet" href="styles.css">
 
-   <!-- Подключение шрифтов Google Fonts -->
-   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet"> <!-- Playfair Display и Roboto -->
-   <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet"> <!-- DM Sans -->
+  <!-- Подключение шрифта -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
 </head>
-
 <body>
+  <!-- Таблица отчёта -->
+  <table id="reportTable">
+    <tr>
+      <!-- Первая строка шапки -->
+      <td colspan="10" class="header">Report on the work carried out for September 2025 in Astana. Compiled by the Representative of the DB Khusainov R.R.</td>
+      <td colspan="3" class="header">dismissed, punished, deprived of bonuses</td>
+    </tr>
+    <tr>
+      <!-- Вторая строка шапки -->
+      <th>days of the month</th>
+      <th colspan="9">work done</th>
+      <th colspan="2">amount of compensation</th>
+      <th>dismissed, etc.</th>
+    </tr>
 
-<table id="reportTable">
-  <tr>
-    <!-- Первая строка-заголовок -->
-    <td colspan="10" class="header">Report on the work carried out for August 2025 in Astana. Compiled by the Representative of the DB Khusainov R.R.</td>
-    <td colspan="3" class="header">dismissed, punished, deprived of bonuses</td>
-  </tr>
+    <!-- Здесь JS сам создаст строки с 1 по 30 сентября -->
 
-  <tr>
-    <!-- Вторая строка-заголовок -->
-    <th>days of the month</th>
-    <th colspan="9">work done</th>
-    <th colspan="2">amount of compensation</th>
-    <th>dismissed, etc.</th>
-  </tr>
+    <!-- Итоговая строка -->
+    <tr>
+      <td colspan="10" class="total">TOTAL:</td>
+      <td colspan="2" id="totalCell" class="money total">0 ₸</td>
+      <td></td>
+    </tr>
+  </table>
 
-  <!-- Здесь идут ваши строки с данными, но JS их потом удалит и пересоберёт -->
-  <tr>
-    <td>1</td>
-    <td colspan="9">repayment of Revision Astana24, A240000047 dated 17.07.25;</td>
-    <td colspan="2" class="money">36 740,00 ₸</td>
-    <td></td>
-  </tr>
-
-  <tr>
-    <td>2</td>
-    <td colspan="9" class="red">NW flood, Nur-Sultan1 08/27/25; candidate for PC Nur-Sultan1 Kryat Ruslan Andreevich;</td>
-    <td colspan="2" class="money red">804 980,00 ₸</td>
-    <td></td>
-  </tr>
-
-  <!-- ... (остальные строки с вашими данными) ... -->
-
-  <tr>
-    <td>31</td>
-    <td colspan="9" class="red">SZ laptop theft, Astana24, 12/23/2021 (Added Application to the Regional Chamber of Private Judicial Enforcement)</td>
-    <td colspan="2" class="money red">388 670,00 ₸</td>
-    <td></td>
-  </tr>
-
-  <!-- Итоговая строка -->
-  <tr>
-    <td colspan="10" class="total">TOTAL:</td>
-    <td colspan="2" id="totalCell" class="money total">0 ₸</td>
-    <td></td>
-  </tr>
-</table>
-
-<script src="script.js"></script>
-
+  <!-- Подключение скрипта -->
+  <script src="script.js"></script>
 </body>
 </html>
