@@ -36,6 +36,13 @@ th, td {
   font-weight: bold;
 }
 
+.day-col {
+  width: 6%; /* ещё более узкая колонка для дней */
+  text-align: center;
+  font-weight: bold;
+}
+
+
 .wide {
   width: 64%; /* Широкая колонка "работа" */
 }
