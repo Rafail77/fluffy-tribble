@@ -1,36 +1,56 @@
 /* ---- БАЗОВЫЕ СТИЛИ ТАБЛИЦЫ ---- */
-    table {
-      width: 100%;              /* таблица на всю ширину */
-      border-collapse: collapse;/* убираем двойные линии */
-      margin-top: 20px;         /* отступ сверху */
-      font-family: Arial, sans-serif; /* читаемый шрифт */
-      font-size: 14px;          /* размер текста */
-    }
+table {
+  width: 100%;                       /* Таблица занимает всю ширину */
+  border-collapse: collapse;         /* Убираем двойные границы */
+  margin-top: 20px;                  /* Отступ сверху */
+  font-family: Arial, sans-serif;    /* Читаемый шрифт */
+  font-size: 14px;                   /* Размер текста */
+}
 
-    th, td {
-      border: 1px solid #444;   /* тонкая чёрная рамка */
-      padding: 6px;             /* внутренний отступ */
-      vertical-align: top;      /* выравнивание текста по верхнему краю */
-    }
+th, td {
+  border: 1px solid #444;            /* Граница ячеек */
+  padding: 6px;                      /* Внутренние отступы */
+  vertical-align: top;               /* Выравнивание текста по верхнему краю */
+}
 
-    .header {
-      background: #f0e68c;      /* жёлтый фон для заголовков */
-      font-weight: bold;        /* жирный текст */
-      text-align: center;       /* по центру */
-    }
+/* ---- ШАПКА ТАБЛИЦЫ (первая строка) ---- */
+.header {
+  background: linear-gradient(to bottom, #fff8b5, #f0e68c); /* Градиент: сверху светлее, снизу темнее */
+  font-weight: bold;                 /* Жирный текст */
+  text-align: center;                /* Текст по центру */
+  border-radius: 8px 8px 0 0;        /* Скругляем верхние углы */
+  box-shadow: 
+    inset 0 2px 4px rgba(255,255,255,0.7), /* Внутренняя подсветка сверху (создаёт выпуклость) */
+    inset 0 -2px 4px rgba(0,0,0,0.15),     /* Лёгкая внутренняя тень снизу */
+    0 4px 8px rgba(0,0,0,0.25);            /* Внешняя тень под строкой (даёт объём) */
+  position: sticky;                 /* Делаем "липкой" при прокрутке */
+  top: 0;                           /* Прикрепляем к верхнему краю */
+  z-index: 2;                       /* Поверх остальных строк */
+}
 
-    .red {
-      color: red;               /* красный текст для важных строк */
-      font-weight: bold;        /* делаем жирным */
-    }
+/* ---- ВТОРАЯ СТРОКА (заголовки колонок) ---- */
+th {
+  background: linear-gradient(to bottom, #fffacd, #fafad2); /* Светлый градиент */
+  font-weight: bold;                 /* Жирный текст */
+  text-align: center;                /* Центрируем заголовки */
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.8); /* Лёгкая внутренняя подсветка */
+  position: sticky;                  /* Липкая при прокрутке */
+  top: 35px;                         /* Фиксируем сразу под первой строкой */
+  z-index: 1;                        /* Чуть ниже, чем первая строка */
+}
 
-    .money {
-      text-align: right;        /* суммы выравниваем по правому краю */
-      white-space: nowrap;      /* не переносить валюту на другую строку */
-    }
+/* ---- ОСОБЫЕ СТИЛИ ---- */
+.red {
+  color: red;                        /* Красный текст для важных строк */
+  font-weight: bold;                 /* Делаем жирным */
+}
 
-    .total {
-      background: #eee;         /* серый фон у итоговой строки */
-      font-weight: bold;        /* жирный текст */
-    }
+.money {
+  text-align: right;                 /* Суммы выравниваем по правому краю */
+  white-space: nowrap;               /* Запрещаем перенос валюты на новую строку */
+}
 
+.total {
+  background: #eee;                  /* Серый фон для итоговой строки */
+  font-weight: bold;                 /* Жирный текст */
+}
