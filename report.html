@@ -1,46 +1,46 @@
-<!DOCTYPE html> <!-- Сообщаем браузеру, что документ написан на HTML5 -->
-<html lang="en"> <!-- Указываем язык документа: английский -->
-<head>
-  <meta charset="UTF-8"> <!-- Кодировка символов UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштабирование для мобильных -->
-  <title>Report for September 2025</title> <!-- Заголовок во вкладке браузера -->
+<!DOCTYPE html> <!-- Указываем, что документ HTML5 -->
+<html lang="ru"> <!-- Язык документа -->
 
-  <!-- Подключение файла со стилями -->
+<head>
+  <meta charset="UTF-8"> <!-- Кодировка -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для моб. устройств -->
+  <title>Отчёт за сентябрь 2025</title> <!-- Заголовок вкладки -->
+
+  <!-- Подключаем CSS -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Подключение шрифта DM Sans с Google Fonts -->
+  <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <table id="reportTable"> <!-- Таблица отчета -->
-
+  <!-- Таблица -->
+  <table id="reportTable">
     <tr>
-      <!-- Первая строка шапки: объединение ячеек -->
-      <td colspan="12" class="header"> <!-- Левая часть шапки (занимает 12 колонок) -->
-        Отчет о проделанной работе за сентябрь 2025 года по г. Астана. <br> <!-- Текст отчета -->
-        Составитель: Представитель ДБ Хусаинов Р.Р. <!-- Автор отчета -->
+      <!-- Шапка объединяет все 4 столбца -->
+      <td colspan="4" class="header">
+        Отчет о проделанной работе за сентябрь 2025 года по г. Астана.<br>
+        Составитель: Представитель ДБ Хусаинов Р.Р.
       </td>
-      <td class="header">Уволен, наказан, лишен премий</td> <!-- Правая часть шапки -->
     </tr>
 
     <tr>
-      <!-- Вторая строка: названия колонок -->
-      <th>days of the month</th> <!-- Первый столбец: дни месяца -->
-      <th colspan="9">work done</th> <!-- Большая колонка: проделанная работа -->
-      <th>amount of compensation</th> <!-- Колонка: сумма компенсации -->
-      <th>dismissed, punished, deprived of bonuses</th> <!-- Колонка: уволен и т.д. -->
+      <!-- Заголовки колонок -->
+      <th class="narrow">День</th>
+      <th class="wide">Проделанная работа</th>
+      <th class="narrow">Сумма компенсации</th>
+      <th class="narrow">Уволен, наказан,<br>лишён премий</th>
     </tr>
 
-    <!-- Строки с данными будут добавлены через JavaScript -->
-
+    <!-- Итоговая строка -->
     <tr>
-      <!-- Последняя строка: итог -->
-      <td colspan="10" class="total">TOTAL:</td> <!-- Ячейка с текстом TOTAL -->
-      <td id="totalCell" class="money total">0 ₸</td> <!-- Итоговая сумма -->
-      <td></td> <!-- Пустая ячейка -->
+      <td colspan="2" class="total">ИТОГО:</td>
+      <td id="totalCell" class="money total">0 ₸</td>
+      <td></td>
     </tr>
   </table>
 
-  <script src="script.js"></script> <!-- Подключение JavaScript -->
+  <!-- Подключаем JS -->
+  <script src="script.js"></script>
 </body>
 </html>
