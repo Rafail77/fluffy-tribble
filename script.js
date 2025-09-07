@@ -1,48 +1,56 @@
-// Находим таблицу
-const table = document.getElementById("reportTable");
+// -------------------- СОЗДАЁМ ДНИ СЕНТЯБРЯ 2025 --------------------
+const table = document.getElementById("reportTable");               // Находим таблицу
+const totalRow = table.querySelector(".total").closest("tr");       // Находим строку ИТОГО
 
-// Строка ИТОГО
-const totalRow = document.getElementById("totalCell").closest("tr");
+const year = 2025;
+const month = 8; // сентябрь (месяцы в JS считаются с 0 → январь=0, сентябрь=8)
+const daysInMonth = 30; // в сентябре всегда 30 дней
 
-// Дней в сентябре 2025
-const daysInSeptember = 30;
+for (let day = 1; day <= daysInMonth; day++) {
+  const date = new Date(year, month, day);              // создаём дату
+  const weekday = date.getDay();                        // 0=воскресенье, 6=суббота
 
-// Проверка выходного
-function isWeekend(year, month, day) {
-  const date = new Date(year, month - 1, day);
-  const weekday = date.getDay();
-  return weekday === 0 || weekday === 6;
-}
+  const newRow = table.insertRow(totalRow.rowIndex);    // вставляем перед строкой ИТОГО
 
-// Генерация строк
-for (let day = 1; day <= daysInSeptember; day++) {
-  const newRow = table.insertRow(totalRow.rowIndex);
-
-  // 1. День
+  // --- Ячейка "День" ---
   const dayCell = newRow.insertCell();
   dayCell.textContent = day;
-  dayCell.classList.add("day-col"); // <-- сделали ещё уже
 
-  // 2. Проделанная работа
-  const workCell = newRow.insertCell();
-  workCell.classList.add("wide");
-  workCell.innerHTML = "";
-
-  // 3. Сумма компенсации
-  const sumCell = newRow.insertCell();
-  sumCell.classList.add("money", "narrow");
-  sumCell.innerHTML = "";
-
-  // 4. Уволен, наказан...
-  const firedCell = newRow.insertCell();
-  firedCell.classList.add("narrow");
-  firedCell.innerHTML = "";
-
-  // Подсветка выходных
-  if (isWeekend(2025, 9, day)) {
+  // Если суббота (6) или воскресенье (0) → красным
+  if (weekday === 0 || weekday === 6) {
     dayCell.classList.add("red");
-    workCell.classList.add("red");
-    sumCell.classList.add("red");
-    firedCell.classList.add("red");
   }
+
+  // --- Ячейка "Работа" ---
+  const workCell = newRow.insertCell();
+  workCell.textContent = ""; // пока пустая
+
+  // --- Ячейка "Сумма" ---
+  const sumCell = newRow.insertCell();
+  sumCell.classList.add("money");
+
+  // --- Ячейка "Уволен, наказан..." ---
+  const firedCell = newRow.insertCell();
+  firedCell.textContent = "";
 }
+
+// -------------------- ПЕРЕСЧЁТ ИТОГО --------------------
+function recalcTotal() {
+  const moneyCells = document.querySelectorAll('#reportTable .money:not(.total)');
+  let total = 0;
+
+  moneyCells.forEach(cell => {
+    let value = cell.textContent.replace(/[^\d,]/g, '').replace(',', '.');
+    if (value) total += parseFloat(value);
+  });
+
+  const formattedTotal = total.toLocaleString('ru-RU', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + " ₸";
+
+  document.getElementById('totalCell').textContent = formattedTotal;
+}
+
+recalcTotal(); // вызываем сразу
+

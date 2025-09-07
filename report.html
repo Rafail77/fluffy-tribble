@@ -1,46 +1,46 @@
-<!DOCTYPE html> <!-- Указываем, что документ HTML5 -->
-<html lang="ru"> <!-- Язык документа -->
-
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8"> <!-- Кодировка -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для моб. устройств -->
-  <title>Отчёт за сентябрь 2025</title> <!-- Заголовок вкладки -->
-
-  <!-- Подключаем CSS -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Шрифт -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"> <!-- правильная кодировка -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- адаптив -->
+  <title>Отчёт за сентябрь 2025</title>
+  <link rel="stylesheet" href="styles.css"> <!-- подключаем CSS -->
 </head>
-
 <body>
-  <!-- Таблица -->
-  <table id="reportTable">
-    <tr>
-      <!-- Шапка объединяет все 4 столбца -->
-      <td colspan="4" class="header">
-        Отчет о проделанной работе за сентябрь 2025 года по г. Астана.<br>
-        Составитель: Представитель ДБ Хусаинов Р.Р.
-      </td>
-    </tr>
 
-    <tr>
-      <!-- Заголовки колонок -->
-      <th class="narrow">День</th>
-      <th class="wide">Проделанная работа</th>
-      <th class="narrow">Сумма компенсации</th>
-      <th class="narrow">Уволен, наказан,<br>лишён премий</th>
-    </tr>
+<table id="reportTable">
+  <!-- Управляем шириной колонок -->
+  <colgroup>
+    <col class="col-day">      <!-- узкая колонка для даты -->
+    <col class="col-work">     <!-- широкая колонка для работы -->
+    <col class="col-money">    <!-- колонка для суммы -->
+    <col class="col-fired">    <!-- колонка для уволен/наказан -->
+  </colgroup>
 
-    <!-- Итоговая строка -->
-    <tr>
-      <td colspan="2" class="total">ИТОГО:</td>
-      <td id="totalCell" class="money total">0 ₸</td>
-      <td></td>
-    </tr>
-  </table>
+  <!-- Большая шапка -->
+  <tr>
+    <td colspan="4" class="header">
+      Отчёт о проделанной работе за сентябрь 2025 года по г. Астана.<br>
+      Составитель: Представитель ДБ Хусаинов Р.Р.
+    </td>
+  </tr>
 
-  <!-- Подключаем JS -->
-  <script src="script.js"></script>
+  <!-- Подзаголовки -->
+  <tr>
+    <th>День</th>
+    <th>Проделанная работа</th>
+    <th>Сумма компенсации</th>
+    <th>Уволен, наказан, лишён премий</th>
+  </tr>
+
+  <!-- Итоговая строка -->
+  <tr>
+    <td colspan="2" class="total">ИТОГО:</td>
+    <td id="totalCell" class="money total">0 ₸</td>
+    <td></td>
+  </tr>
+</table>
+
+<script src="script.js"></script> <!-- подключаем JS -->
 </body>
 </html>

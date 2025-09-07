@@ -1,67 +1,76 @@
-/* ---- ОСНОВНОЕ ---- */
-body {
-  font-family: 'DM Sans', sans-serif; /* Шрифт */
-  margin: 20px; /* Отступы */
+/* ---- БАЗОВЫЕ СТИЛИ ТАБЛИЦЫ ---- */
+#reportTable {
+  width: 100%;                 /* таблица на всю ширину */
+  border-collapse: collapse;    /* убираем двойные линии */
+  table-layout: fixed;          /* фиксированное распределение */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* объёмная тень */
+  border-radius: 10px;          /* скруглённые углы */
+  overflow: hidden;
+  font-family: "DM Sans", sans-serif;
 }
 
-/* ---- ТАБЛИЦА ---- */
-table {
-  width: 100%; /* На всю ширину */
-  border-collapse: collapse; /* Убираем двойные границы */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Лёгкая тень */
+/* ---- ШИРИНА КОЛОНОК ---- */
+.col-day {
+  width: 6%;   /* узкая колонка */
+}
+.col-work {
+  width: 70%;  /* самая широкая */
+}
+.col-money,
+.col-fired {
+  width: 12%;  /* равные по ширине */
+}
+
+/* ---- ГЛАВНАЯ ШАПКА ---- */
+.header {
+  background: linear-gradient(to bottom, #2c3e50, #1a252f); /* градиент */
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  padding: 12px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* эффект объёма */
+}
+
+/* ---- ПОДЗАГОЛОВКИ ---- */
+th {
+  background: rgba(17, 25, 40, 1);
+  color: white;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
 }
 
 /* ---- ЯЧЕЙКИ ---- */
-th, td {
-  border: 1px solid #444; /* Тонкая граница */
-  padding: 6px; /* Отступы */
-  vertical-align: top; /* Текст сверху */
+td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 14px;
 }
 
-/* ---- ШАПКА ---- */
-.header {
-  background: linear-gradient(to bottom, #f0e68c, #e0d77c); /* Градиент */
-  font-weight: bold; /* Жирный */
-  text-align: center; /* По центру */
-  font-size: 16px; /* Размер текста */
-  padding: 12px; /* Отступ */
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.6),
-              inset 0 -2px 4px rgba(0,0,0,0.2); /* Эффект объёма */
-}
-
-/* ---- КОЛОНКИ ---- */
-.narrow {
-  width: 12%; /* Узкие колонки */
-  text-align: center; /* Центровка */
-  font-weight: bold;
-}
-
-.day-col {
-  width: 6%; /* ещё более узкая колонка для дней */
+/* ---- ПЕРВАЯ КОЛОНКА (даты) ---- */
+td:first-child, th:first-child {
   text-align: center;
-  font-weight: bold;
-}
-
-
-.wide {
-  width: 64%; /* Широкая колонка "работа" */
-}
-
-/* ---- ЧИСЛА ---- */
-.money {
-  text-align: right; /* Суммы вправо */
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Тень для объёма */
-}
-
-/* ---- ИТОГОВАЯ СТРОКА ---- */
-.total {
-  background: #eee; /* Серый фон */
   font-weight: bold;
 }
 
 /* ---- ВЫХОДНЫЕ ---- */
 .red {
-  color: red; /* Красный */
+  color: red;
+  font-weight: bold;
+}
+
+/* ---- ДЕНЬГИ ---- */
+.money {
+  text-align: right;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2); /* лёгкая выпуклость */
+}
+
+/* ---- ИТОГ ---- */
+.total {
+  background: #f0f0f0;
   font-weight: bold;
 }
