@@ -1,58 +1,56 @@
-// -------------------- НАСТРОЙКИ --------------------
-const table = document.getElementById("reportTable");  // Находим таблицу
+// -------------------- НАСТРОЙКА ДАТЫ --------------------
+const table = document.getElementById("reportTable"); // Находим таблицу по id
 const totalRow = table.querySelector(".total").closest("tr"); // Находим строку TOTAL
 
-// Месяц сентябрь 2025
-const year = 2025;              
-const month = 8;  // В JS месяцы начинаются с 0 (январь=0, сентябрь=8)
-const daysInMonth = 30;          // В сентябре 30 дней
+const year = 2025; // Год отчета
+const month = 8; // Сентябрь (январь = 0, поэтому 8 = 9-й месяц)
+const daysInMonth = 30; // В сентябре 30 дней
 
-// -------------------- СОЗДАНИЕ СТРОК --------------------
-for (let day = 1; day <= daysInMonth; day++) {
-  const date = new Date(year, month, day);     // Создаём дату
-  const weekday = date.getDay();               // День недели (0=вс, 6=сб)
+// -------------------- СОЗДАНИЕ СТРОК С ДНЯМИ --------------------
+for (let day = 1; day <= daysInMonth; day++) { // Цикл от 1 до 30
+  const date = new Date(year, month, day); // Создаём объект даты
+  const weekday = date.getDay(); // День недели (0=воскресенье, 6=суббота)
 
-  const newRow = table.insertRow(totalRow.rowIndex); // Вставляем строку перед TOTAL
+  const newRow = table.insertRow(totalRow.rowIndex); // Вставляем новую строку перед TOTAL
 
-  // Если суббота или воскресенье → добавляем класс weekend
+  // Если день суббота или воскресенье → выделяем красным
   if (weekday === 0 || weekday === 6) {
-    newRow.classList.add("weekend");
+    newRow.classList.add("weekend"); // Добавляем класс weekend
   }
 
-  // ---- Первая ячейка (номер дня) ----
-  const dayCell = newRow.insertCell();
-  dayCell.textContent = day;  // вставляем число
+  // ---- Номер дня ----
+  const dayCell = newRow.insertCell(); // Создаём ячейку
+  dayCell.textContent = day; // Записываем число дня
 
-  // ---- Ячейка "работа" (colspan=9) ----
-  const workCell = newRow.insertCell();
-  workCell.colSpan = 9;
-  workCell.innerHTML = "";    // по умолчанию пусто
+  // ---- Проделанная работа ----
+  const workCell = newRow.insertCell(); // Создаём ячейку
+  workCell.colSpan = 9; // Задаём colspan = 9
+  workCell.innerHTML = ""; // Пока оставляем пустым
 
-  // ---- Ячейка "сумма" (colspan=2) ----
-  const sumCell = newRow.insertCell();
-  sumCell.colSpan = 2;
-  sumCell.classList.add("money");
-  sumCell.innerHTML = "";     // пусто
+  // ---- Сумма компенсации ----
+  const sumCell = newRow.insertCell(); // Создаём ячейку
+  sumCell.classList.add("money"); // Добавляем класс "money"
+  sumCell.innerHTML = ""; // Пустое значение
 
-  // ---- Последняя ячейка ----
-  const lastCell = newRow.insertCell();
-  lastCell.innerHTML = "";    // пусто
+  // ---- Уволен, наказан ----
+  const lastCell = newRow.insertCell(); // Создаём ячейку
+  lastCell.innerHTML = ""; // Пустое значение
 }
 
 // -------------------- ПЕРЕСЧЁТ TOTAL --------------------
 function recalcTotal() {
-  const moneyCells = document.querySelectorAll('#reportTable .money:not(.total)');
-  let total = 0;
+  const moneyCells = document.querySelectorAll('#reportTable .money:not(.total)'); // Все ячейки с суммами кроме TOTAL
+  let total = 0; // Начальное значение суммы
 
-  moneyCells.forEach(cell => {
-    let value = cell.textContent.replace(/[^\d,]/g, '').replace(',', '.'); 
-    if (value) total += parseFloat(value);
+  moneyCells.forEach(cell => { // Перебираем ячейки
+    let value = cell.textContent.replace(/[^\d,]/g, '').replace(',', '.'); // Очищаем строку от лишних символов
+    if (value) total += parseFloat(value); // Складываем числа
   });
 
-  const formattedTotal = total.toLocaleString('ru-RU', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }) + " ₸";
+  const formattedTotal = total.toLocaleString('ru-RU', { // Форматируем число по-русски
+    minimumFractionDigits: 2, // Минимум 2 знака после запятой
+    maximumFractionDigits: 2  // Максимум 2 знака после запятой
+  }) + " ₸"; // Добавляем знак валюты
 
-  document.getElementById('totalCell').textContent = formattedTotal;
+  document.getElementById('totalCell').textContent = formattedTotal; // Записываем в ячейку TOTAL
 }
