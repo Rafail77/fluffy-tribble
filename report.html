@@ -1,46 +1,42 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html> <!-- Указываем браузеру, что это HTML5 -->
+<html lang="ru"> <!-- Указываем язык страницы -->
 <head>
-  <meta charset="UTF-8"> <!-- правильная кодировка -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- адаптив -->
-  <title>Отчёт за сентябрь 2025</title>
-  <link rel="stylesheet" href="styles.css"> <!-- подключаем CSS -->
+  <meta charset="UTF-8"> <!-- Кодировка UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Адаптивность для мобильных -->
+  <title>Отчёт за месяц</title> <!-- Заголовок страницы -->
+
+  <!-- Подключаем стили -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<table id="reportTable">
-  <!-- Управляем шириной колонок -->
-  <colgroup>
-    <col class="col-day">      <!-- узкая колонка для даты -->
-    <col class="col-work">     <!-- широкая колонка для работы -->
-    <col class="col-money">    <!-- колонка для суммы -->
-    <col class="col-fired">    <!-- колонка для уволен/наказан -->
-  </colgroup>
+  <!-- Таблица для отчёта -->
+  <table id="reportTable">
+    <tr>
+      <!-- Заголовок: объединяем ячейки -->
+      <td colspan="12" class="header">
+        Отчёт о проделанной работе за <span id="monthName"></span> <span id="year"></span> года по г. Астана.  
+        Составитель: Представитель ДБ Хусаинов Р.Р.
+      </td>
+    </tr>
 
-  <!-- Большая шапка -->
-  <tr>
-    <td colspan="4" class="header">
-      Отчёт о проделанной работе за сентябрь 2025 года по г. Астана.
-      Составитель: Представитель ДБ Хусаинов Р.Р.
-    </td>
-  </tr>
+    <tr>
+      <!-- Заголовки столбцов -->
+      <th class="narrow">День</th> <!-- Узкая колонка для дат -->
+      <th class="wide">Проделанная работа</th> <!-- Широкая колонка -->
+      <th class="narrow">Сумма компенсации</th> <!-- Уже -->
+      <th class="narrow">Уволен, наказан</th> <!-- Уже -->
+    </tr>
 
-  <!-- Подзаголовки -->
-  <tr>
-    <th>День</th>
-    <th>Проделанная работа</th>
-    <th>Сумма компенсации</th>
-    <th>Уволен, наказан, лишён премий</th>
-  </tr>
+    <!-- Строки будут добавлены через JS -->
+    <tr>
+      <td colspan="2" class="total">ИТОГО:</td> <!-- Объединяем 2 ячейки -->
+      <td id="totalCell" class="money total">0 ₸</td> <!-- Общая сумма -->
+      <td></td> <!-- Пустая ячейка -->
+    </tr>
+  </table>
 
-  <!-- Итоговая строка -->
-  <tr>
-    <td colspan="2" class="total">ИТОГО:</td>
-    <td id="totalCell" class="money total">0 ₸</td>
-    <td></td>
-  </tr>
-</table>
-
-<script src="script.js"></script> <!-- подключаем JS -->
+  <!-- Подключаем JS -->
+  <script src="script.js"></script>
 </body>
 </html>

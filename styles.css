@@ -1,76 +1,51 @@
-/* ---- БАЗОВЫЕ СТИЛИ ТАБЛИЦЫ ---- */
-#reportTable {
-  width: 100%;                 /* таблица на всю ширину */
-  border-collapse: collapse;    /* убираем двойные линии */
-  table-layout: fixed;          /* фиксированное распределение */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* объёмная тень */
-  border-radius: 10px;          /* скруглённые углы */
-  overflow: hidden;
-  font-family: "DM Sans", sans-serif;
+/* ---- Общие стили таблицы ---- */
+table {
+  width: 100%;                  /* Таблица растягивается на всю ширину */
+  border-collapse: collapse;    /* Убираем двойные линии */
+  margin-top: 20px;             /* Отступ сверху */
+  font-family: Arial, sans-serif; /* Основной шрифт */
+  font-size: 14px;              /* Размер текста */
 }
 
-/* ---- ШИРИНА КОЛОНОК ---- */
-.col-day {
-  width: 6%;   /* узкая колонка */
-}
-.col-work {
-  width: 70%;  /* самая широкая */
-}
-.col-money,
-.col-fired {
-  width: 12%;  /* равные по ширине */
+th, td {
+  border: 1px solid #444;       /* Тонкая чёрная рамка */
+  padding: 6px;                 /* Отступ внутри ячеек */
+  vertical-align: top;          /* Выравнивание по верхнему краю */
+  text-align: left;             /* Выравнивание текста по левому краю */
 }
 
-/* ---- ГЛАВНАЯ ШАПКА ---- */
+/* ---- Шапка ---- */
 .header {
-  background: linear-gradient(to bottom, #2c3e50, #1a252f); /* градиент */
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  font-size: 16px;
-  padding: 12px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6); /* эффект объёма */
+  background: #f0e68c;          /* Жёлтый фон */
+  font-weight: bold;            /* Жирный текст */
+  text-align: center;           /* Текст по центру */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Тень для объёма */
 }
 
-/* ---- ПОДЗАГОЛОВКИ ---- */
-th {
-  background: rgba(17, 25, 40, 1);
-  color: white;
-  padding: 8px;
-  border: 1px solid rgba(255,255,255,0.2);
-  font-size: 14px;
+/* ---- Колонки ---- */
+.narrow {
+  width: 120px;                 /* Узкие колонки (даты, суммы, уволен) */
+  text-align: center;           /* Центрируем текст */
 }
 
-/* ---- ЯЧЕЙКИ ---- */
-td {
-  border: 1px solid #ddd;
-  padding: 6px 8px;
-  text-align: left;
-  font-size: 14px;
+.wide {
+  width: 60%;                   /* Широкая колонка "Проделанная работа" */
 }
 
-/* ---- ПЕРВАЯ КОЛОНКА (даты) ---- */
-td:first-child, th:first-child {
-  text-align: center;
-  font-weight: bold;
+/* ---- День недели красный для выходных ---- */
+.weekend {
+  color: red;                   /* Красный текст для сб/вс */
+  font-weight: bold;            /* Жирный для выделения */
 }
 
-/* ---- ВЫХОДНЫЕ ---- */
-.red {
-  color: red;
-  font-weight: bold;
-}
-
-/* ---- ДЕНЬГИ ---- */
+/* ---- Деньги ---- */
 .money {
-  text-align: right;
-  font-weight: bold;
-  color: #333;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.2); /* лёгкая выпуклость */
+  text-align: right;            /* Выравнивание по правому краю */
+  white-space: nowrap;          /* Запрещаем перенос валюты */
 }
 
-/* ---- ИТОГ ---- */
+/* ---- Итог ---- */
 .total {
-  background: #f0f0f0;
-  font-weight: bold;
+  background: #eee;             /* Серый фон */
+  font-weight: bold;            /* Жирный текст */
 }

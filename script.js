@@ -1,40 +1,55 @@
-// -------------------- СОЗДАЁМ ДНИ СЕНТЯБРЯ 2025 --------------------
-const table = document.getElementById("reportTable");               // Находим таблицу
-const totalRow = table.querySelector(".total").closest("tr");       // Находим строку ИТОГО
+// ==== Настройки месяца ====
+const year = 2025;      // Год
+const month = 8;        // Месяц (0 = Январь, 8 = Сентябрь, 9 = Октябрь и т.д.)
 
-const year = 2025;
-const month = 8; // сентябрь (месяцы в JS считаются с 0 → январь=0, сентябрь=8)
-const daysInMonth = 30; // в сентябре всегда 30 дней
+// ==== Получаем таблицу ====
+const table = document.getElementById("reportTable");
+const totalRow = table.querySelector(".total").closest("tr");
 
+// ==== Узнаём количество дней в месяце ====
+const daysInMonth = new Date(year, month + 1, 0).getDate(); 
+// new Date(year, month+1, 0) → последний день месяца
+
+// ==== Названия месяцев ====
+const monthNames = [
+  "январь", "февраль", "март", "апрель", "май", "июнь",
+  "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
+];
+
+// ==== Подставляем месяц и год в заголовок ====
+document.getElementById("monthName").textContent = monthNames[month];
+document.getElementById("year").textContent = year;
+
+// ==== Генерация строк таблицы ====
 for (let day = 1; day <= daysInMonth; day++) {
-  const date = new Date(year, month, day);              // создаём дату
-  const weekday = date.getDay();                        // 0=воскресенье, 6=суббота
+  const newRow = table.insertRow(totalRow.rowIndex);
 
-  const newRow = table.insertRow(totalRow.rowIndex);    // вставляем перед строкой ИТОГО
+  // Дата
+  const dateCell = newRow.insertCell();
+  dateCell.textContent = day;
 
-  // --- Ячейка "День" ---
-  const dayCell = newRow.insertCell();
-  dayCell.textContent = day;
-
-  // Если суббота (6) или воскресенье (0) → красным
+  // Проверяем день недели (0 = вс, 6 = сб)
+  const weekday = new Date(year, month, day).getDay();
   if (weekday === 0 || weekday === 6) {
-    dayCell.classList.add("red");
+    dateCell.classList.add("weekend"); // Красим выходные
   }
 
-  // --- Ячейка "Работа" ---
+  // Проделанная работа
   const workCell = newRow.insertCell();
-  workCell.textContent = ""; // пока пустая
+  workCell.classList.add("wide");
+  workCell.innerHTML = ""; // Можно заполнять позже
 
-  // --- Ячейка "Сумма" ---
+  // Сумма
   const sumCell = newRow.insertCell();
   sumCell.classList.add("money");
+  sumCell.innerHTML = ""; // Суммы добавляются вручную
 
-  // --- Ячейка "Уволен, наказан..." ---
-  const firedCell = newRow.insertCell();
-  firedCell.textContent = "";
+  // Уволен/наказан
+  const lastCell = newRow.insertCell();
+  lastCell.innerHTML = ""; // Тоже можно заполнять позже
 }
 
-// -------------------- ПЕРЕСЧЁТ ИТОГО --------------------
+// ==== Подсчёт суммы TOTAL ====
 function recalcTotal() {
   const moneyCells = document.querySelectorAll('#reportTable .money:not(.total)');
   let total = 0;
@@ -52,5 +67,5 @@ function recalcTotal() {
   document.getElementById('totalCell').textContent = formattedTotal;
 }
 
-recalcTotal(); // вызываем сразу
-
+// Считаем при загрузке
+recalcTotal();
