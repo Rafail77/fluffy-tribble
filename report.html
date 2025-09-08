@@ -1,32 +1,33 @@
 <!DOCTYPE html> <!-- Указываем, что это HTML5 -->
-<html lang="ru"> <!-- Язык документа: русский -->
+<html lang="ru"> <!-- Язык страницы: русский -->
 
 <head>
-  <meta charset="UTF-8"> <!-- Устанавливаем кодировку UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштабирование на мобильных -->
-  <title>Отчет за сентябрь 2025</title> <!-- Заголовок вкладки браузера -->
+  <meta charset="UTF-8"> <!-- Кодировка UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для мобильных -->
+  <title>Отчет</title> <!-- Заголовок вкладки браузера -->
 
-  <!-- Подключение внешнего CSS-файла -->
+  <!-- Подключение внешнего CSS -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Подключение шрифтов Google Fonts -->
+  <!-- Подключение шрифтов -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&family=DM+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- Основная таблица для отчета -->
-  <table id="reportTable"> <!-- ID нужен для управления из JS -->
+  <!-- Таблица отчета -->
+  <table id="reportTable"> <!-- ID нужен для работы JS -->
     <thead>
-      <!-- Первая строка шапки (объединённая) -->
+      <!-- Первая строка (объединённая шапка) -->
       <tr>
         <th colspan="4" class="header">
-          Отчет о проделанной работе за сентябрь 2025 года по г. Астана.<br> <!-- Текст заголовка -->
+          Отчет о проделанной работе <!-- Текст заголовка -->
+          <span id="monthYear"></span> <!-- Месяц и год будут вставляться через JS -->
+          по г. Астана.<br>
           Составитель: Представитель ДБ Хусаинов Р.Р.
         </th>
       </tr>
 
-      <!-- Вторая строка шапки с названиями колонок -->
+      <!-- Вторая строка с названиями колонок -->
       <tr>
         <th class="narrow">День</th> <!-- Узкая колонка для чисел -->
         <th>Проделанная работа</th> <!-- Основная широкая колонка -->
@@ -35,20 +36,20 @@
       </tr>
     </thead>
 
-    <!-- Тело таблицы (заполняется автоматически через JS) -->
+    <!-- Тело таблицы (генерируется в JS) -->
     <tbody id="tableBody"></tbody>
 
-    <!-- Итоговая строка -->
+    <!-- Итоги -->
     <tfoot>
       <tr>
-        <td colspan="2" class="total">ИТОГО:</td> <!-- Текстовое поле итогов -->
-        <td id="totalCell" class="money total">0 ₸</td> <!-- Сумма итогов (считается в JS) -->
+        <td colspan="2" class="total">ИТОГО:</td> <!-- Подпись итогов -->
+        <td id="totalCell" class="money total">0 ₸</td> <!-- Итоговая сумма -->
         <td></td> <!-- Пустая ячейка -->
       </tr>
     </tfoot>
   </table>
 
-  <!-- Подключение JS-файла -->
+  <!-- Подключение JS -->
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,53 +1,64 @@
-// === Функция генерации таблицы ===
-function generateTable() {
-  const tbody = document.getElementById("tableBody"); // Находим тело таблицы
-  const totalCell = document.getElementById("totalCell"); // Ячейка для итога
+// === НАСТРОЙКИ МЕСЯЦА И ГОДА ===
+const year = 2025; // Год
+const month = 8;   // Месяц (0=январь → 8=сентябрь)
 
-  tbody.innerHTML = ""; // Очищаем тело таблицы (если уже что-то было)
-  let total = 0; // Переменная для общей суммы компенсаций
+// === НАЗВАНИЯ МЕСЯЦЕВ ДЛЯ ВЫВОДА ===
+const monthNames = [
+  "январь", "февраль", "март", "апрель", "май", "июнь",
+  "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
+];
 
-  const year = 2025; // Год
-  const month = 8; // Месяц (0 = январь → 8 = сентябрь)
-  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Кол-во дней в месяце
+// === ВСТАВЛЯЕМ МЕСЯЦ И ГОД В ШАПКУ ===
+document.getElementById("monthYear").textContent =
+  `за ${monthNames[month]} ${year} года`;
 
-  // Цикл по всем дням месяца
+// === ФУНКЦИЯ СОЗДАНИЯ ТАБЛИЦЫ ===
+function generateTable(year, month) {
+  const tbody = document.getElementById("tableBody"); // Находим <tbody>
+  const totalCell = document.getElementById("totalCell"); // Ячейка итога
+  tbody.innerHTML = ""; // Очищаем тело таблицы
+  let total = 0; // Переменная для суммы
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Определяем количество дней
+
+  // === Генерация строк ===
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month, day); // Создаем дату
-    const weekday = date.getDay(); // Определяем день недели (0=вс, 6=сб)
+    const weekday = date.getDay(); // День недели (0=вс, 6=сб)
 
-    const tr = document.createElement("tr"); // Создаем строку
+    const tr = document.createElement("tr"); // Новая строка
 
-    // === Ячейка "День" ===
+    // --- Колонка День ---
     const tdDay = document.createElement("td");
-    tdDay.textContent = day; // Записываем число месяца
-    if (weekday === 0 || weekday === 6) tdDay.classList.add("red"); // Если суббота/воскресенье → красный
-    tr.appendChild(tdDay); // Добавляем в строку
+    tdDay.textContent = day; // Число месяца
+    if (weekday === 0 || weekday === 6) tdDay.classList.add("red"); // Красим выходные
+    tr.appendChild(tdDay);
 
-    // === Ячейка "Проделанная работа" ===
+    // --- Колонка Работа ---
     const tdWork = document.createElement("td");
-    tdWork.textContent = ""; // Оставляем пустым (для заполнения вручную)
+    tdWork.textContent = ""; // Пока пусто
     if (weekday === 0 || weekday === 6) tdWork.classList.add("red"); // Красим выходные
     tr.appendChild(tdWork);
 
-    // === Ячейка "Сумма компенсации" ===
+    // --- Колонка Сумма компенсации ---
     const tdMoney = document.createElement("td");
-    tdMoney.textContent = ""; // Сумма (пока пусто, можно вписывать вручную)
-    tdMoney.classList.add("money"); // Стилизация для чисел
+    tdMoney.textContent = ""; // Пока пусто
+    tdMoney.classList.add("money"); // Применяем класс для денег
     if (weekday === 0 || weekday === 6) tdMoney.classList.add("red"); // Красим выходные
     tr.appendChild(tdMoney);
 
-    // === Ячейка "Уволен, наказан..." ===
+    // --- Колонка Уволен, наказан... ---
     const tdFired = document.createElement("td");
-    tdFired.textContent = ""; // Пусто (для ручного заполнения)
+    tdFired.textContent = ""; // Пока пусто
     if (weekday === 0 || weekday === 6) tdFired.classList.add("red"); // Красим выходные
     tr.appendChild(tdFired);
 
     tbody.appendChild(tr); // Добавляем строку в таблицу
   }
 
-  // === Итоговая сумма ===
-  totalCell.textContent = total.toLocaleString("ru-RU") + " ₸"; // Вывод суммы (пока 0 ₸)
+  // === Итог (сейчас = 0, пока нет сумм) ===
+  totalCell.textContent = total.toLocaleString("ru-RU") + " ₸";
 }
 
-// === Запускаем функцию при загрузке страницы ===
-generateTable();
+// === ЗАПУСК ФУНКЦИИ ===
+generateTable(year, month);
