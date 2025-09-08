@@ -1,55 +1,65 @@
-<!DOCTYPE html> <!-- Указываем, что это HTML5 -->
-<html lang="ru"> <!-- Язык страницы: русский -->
-
+<!DOCTYPE html> <!-- HTML5 -->
+<html lang="ru"> <!-- Язык документа -->
 <head>
   <meta charset="UTF-8"> <!-- Кодировка UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для мобильных -->
-  <title>Отчет</title> <!-- Заголовок вкладки браузера -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштаб для мобилок -->
+  <title>Отчет по месяцам</title> <!-- Заголовок вкладки -->
 
-  <!-- Подключение внешнего CSS -->
+  <!-- Подключаем CSS -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Подключение шрифтов -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&family=DM+Sans&display=swap" rel="stylesheet">
+  <!-- Подключаем шрифт DM Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <!-- Таблица отчета -->
-  <table id="reportTable"> <!-- ID нужен для работы JS -->
-    <thead>
-      <!-- Первая строка (объединённая шапка) -->
-      <tr>
-        <th colspan="4" class="header">
-          Отчет о проделанной работе <!-- Текст заголовка -->
-          <span id="monthYear"></span> <!-- Месяц и год будут вставляться через JS -->
-          по г. Астана.<br>
-          Составитель: Представитель ДБ Хусаинов Р.Р.
-        </th>
-      </tr>
 
-      <!-- Вторая строка с названиями колонок -->
-      <tr>
-        <th class="narrow">День</th> <!-- Узкая колонка для чисел -->
-        <th>Проделанная работа</th> <!-- Основная широкая колонка -->
-        <th>Сумма компенсации</th> <!-- Средняя колонка -->
-        <th>Уволен, наказан, лишён премий</th> <!-- Средняя колонка -->
-      </tr>
-    </thead>
+<!-- Панель выбора месяца и года -->
+<div class="controls">
+  <label for="monthSelect">Месяц:</label>
+  <select id="monthSelect">
+    <option value="0">Январь</option>
+    <option value="1">Февраль</option>
+    <option value="2">Март</option>
+    <option value="3">Апрель</option>
+    <option value="4">Май</option>
+    <option value="5">Июнь</option>
+    <option value="6">Июль</option>
+    <option value="7">Август</option>
+    <option value="8" selected>Сентябрь</option> <!-- По умолчанию Сентябрь -->
+    <option value="9">Октябрь</option>
+    <option value="10">Ноябрь</option>
+    <option value="11">Декабрь</option>
+  </select>
 
-    <!-- Тело таблицы (генерируется в JS) -->
-    <tbody id="tableBody"></tbody>
+  <label for="yearSelect">Год:</label>
+  <select id="yearSelect">
+    <option value="2024">2024</option>
+    <option value="2025" selected>2025</option> <!-- По умолчанию 2025 -->
+    <option value="2026">2026</option>
+  </select>
+</div>
 
-    <!-- Итоги -->
-    <tfoot>
-      <tr>
-        <td colspan="2" class="total">ИТОГО:</td> <!-- Подпись итогов -->
-        <td id="totalCell" class="money total">0 ₸</td> <!-- Итоговая сумма -->
-        <td></td> <!-- Пустая ячейка -->
-      </tr>
-    </tfoot>
-  </table>
+<!-- Таблица отчета -->
+<table id="reportTable">
+  <tr>
+    <!-- Первая строка шапки -->
+    <td colspan="11" class="header">
+      Отчет о проделанной работе за <span id="reportMonth">сентябрь</span> 
+      <span id="reportYear">2025</span> года по г. Астана. 
+      Составитель: Представитель ДБ Хусаинов Р.Р.
+    </td>
+  </tr>
+  <tr>
+    <!-- Вторая строка шапки -->
+    <th class="date-col">Дни месяца</th>
+    <th colspan="9" class="work-col">Проделанная работа</th>
+    <th class="money-col">Сумма компенсации</th>
+    <th class="punish-col">Уволен, наказан</th>
+  </tr>
+  <!-- Строки с датами будут генерироваться JS -->
+</table>
 
-  <!-- Подключение JS -->
-  <script src="script.js"></script>
+<!-- Подключаем JS -->
+<script src="script.js"></script>
 </body>
 </html>

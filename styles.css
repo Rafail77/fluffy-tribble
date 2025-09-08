@@ -1,84 +1,86 @@
-/* === БАЗОВЫЙ СТИЛЬ СТРАНИЦЫ === */
+/* Общий стиль страницы */
 body {
-  font-family: 'DM Sans', sans-serif; /* Шрифт */
-  background: #f9f9f9; /* Фон */
-  padding: 20px; /* Отступы вокруг */
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f4f6fa;
+  margin: 20px;
 }
 
-/* === ТАБЛИЦА === */
+/* Блок выбора месяца и года */
+.controls {
+  margin-bottom: 15px; /* Отступ снизу */
+  font-size: 16px;
+}
+.controls label {
+  margin-right: 8px;
+  font-weight: bold;
+}
+.controls select {
+  margin-right: 20px;
+  padding: 4px 8px;
+  font-size: 15px;
+}
+
+/* Таблица */
 table {
-  width: 100%; /* Таблица на всю ширину */
-  border-collapse: collapse; /* Убираем двойные границы */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Легкая тень */
-  background: #fff; /* Белый фон */
-  border-radius: 10px; /* Скругленные углы */
-  overflow: hidden; /* Чтобы скругления применялись */
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* === ОБЩАЯ ШАПКА (объединённая строка) === */
-thead .header {
-  padding: 14px; /* Отступы */
-  font-size: 16px; /* Чуть больше текст */
-  font-weight: bold; /* Жирный */
-  background: linear-gradient(to bottom, #e6f2ff, #cce0ff); /* Светло-синий градиент */
-  text-align: center; /* По центру */
-  border: 1px solid #99c2ff; /* Голубая рамка */
-  box-shadow: inset 0 2px 5px rgba(255,255,255,0.8), inset 0 -3px 6px rgba(0,0,0,0.2); /* Объем */
+/* Первая строка (верхний заголовок) */
+.header {
+  background: #2b4c7e; /* Тёмно-синий */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
 }
 
-/* === ВТОРАЯ СТРОКА ШАПКИ === */
-thead tr:nth-child(2) th {
-  padding: 10px; /* Отступы */
-  background: linear-gradient(to bottom, #f0f8ff, #d9ecff); /* Светло-синий градиент */
-  border: 1px solid #99c2ff; /* Голубая рамка */
-  font-weight: bold; /* Жирный текст */
-  text-align: center; /* Центрирование */
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.1); /* Легкий объем */
+/* Вторая строка заголовков */
+th {
+  background: #3a5d95; /* Более светлый синий */
+  color: white;
+  padding: 10px;
+  border: 1px solid #2b4c7e;
 }
 
-/* === УЗКАЯ КОЛОНКА С ДНЯМИ === */
-.narrow {
-  width: 60px; /* Фиксированная ширина */
-  text-align: center; /* Цифры по центру */
-  padding: 4px; /* Минимальные отступы */
-  font-weight: bold; /* Жирные числа */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Легкая выпуклость */
+/* Колонка с датами */
+.date-col, td:first-child {
+  width: 60px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  border-right: 1px solid #ddd;
 }
 
-/* === ОСНОВНАЯ КОЛОНКА (работа) === */
-thead th:nth-child(2) {
-  width: 60%; /* Самая широкая колонка */
+/* Основная колонка работы */
+.work-col {
+  width: 65%;
 }
 
-/* === ДВЕ ПОСЛЕДНИЕ КОЛОНКИ === */
-thead th:nth-child(3),
-thead th:nth-child(4) {
-  width: 20%; /* Равные по ширине */
+/* Колонка компенсаций */
+.money-col {
+  width: 15%;
 }
 
-/* === ЯЧЕЙКИ ТАБЛИЦЫ === */
+/* Колонка уволен/наказан */
+.punish-col {
+  width: 15%;
+}
+
+/* Обычные ячейки */
 td {
-  padding: 6px 10px; /* Отступы */
-  border: 1px solid #ddd; /* Светло-серая рамка */
-  text-align: left; /* По умолчанию слева */
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 
-/* === ВЫХОДНЫЕ ДНИ === */
-.red {
-  color: red; /* Красный текст */
-  font-weight: bold; /* Жирный */
+/* Выходные — красным */
+.weekend {
+  color: red;
+  font-weight: bold;
 }
 
-/* === СТИЛЬ ДЕНЕГ === */
-.money {
-  text-align: right; /* По правому краю */
-  font-family: 'Roboto', sans-serif; /* Строгий шрифт */
-  font-weight: bold; /* Жирный */
-}
-
-/* === ИТОГОВАЯ СТРОКА === */
-tfoot td {
-  font-weight: bold; /* Жирный */
-  background: #eee; /* Серый фон */
-  border-top: 2px solid #ccc; /* Линия сверху */
-}
