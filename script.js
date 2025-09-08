@@ -1,70 +1,60 @@
-// Получаем таблицу и элементы управления
-const table = document.getElementById("reportTable");
-const monthSelect = document.getElementById("monthSelect");
-const yearSelect = document.getElementById("yearSelect");
-const reportMonth = document.getElementById("reportMonth");
-const reportYear = document.getElementById("reportYear");
-
-// Названия месяцев для заголовка
-const monthNames = [
-  "январь","февраль","март","апрель","май","июнь",
-  "июль","август","сентябрь","октябрь","ноябрь","декабрь"
-];
-
 // Функция генерации таблицы
-function generateTable(year, month) {
-  // Удаляем старые строки (кроме первых двух шапок)
-  while (table.rows.length > 2) {
-    table.deleteRow(2);
-  }
+function generateTable() {
+  const month = parseInt(document.getElementById("month").value); // Получаем выбранный месяц
+  const year = parseInt(document.getElementById("year").value);   // Получаем выбранный год
 
-  // Определяем число дней в месяце
+  const tbody = document.querySelector("#reportTable tbody");
+  tbody.innerHTML = ""; // Очищаем таблицу перед перегенерацией
+
+  // Получаем количество дней в месяце
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  // Обновляем текст в шапке
-  reportMonth.textContent = monthNames[month];
-  reportYear.textContent = year;
-
-  // Генерируем строки с датами
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    const dayOfWeek = date.getDay(); // 0=вс, 6=сб
+    const date = new Date(year, month, day); // Создаем объект даты
+    const dayOfWeek = date.getDay(); // День недели (0 = воскресенье, 6 = суббота)
 
+    // Создаем строку таблицы
     const row = document.createElement("tr");
 
-    // Ячейка даты
+    // Ячейка с датой
     const dateCell = document.createElement("td");
     dateCell.textContent = day;
     if (dayOfWeek === 0 || dayOfWeek === 6) {
-      dateCell.classList.add("weekend"); // Подсветка красным
+      dateCell.classList.add("weekend"); // Красный цвет для сб/вс
     }
     row.appendChild(dateCell);
 
-    // Ячейка работы
+    // Ячейка "Проделанная работа"
     const workCell = document.createElement("td");
-    workCell.colSpan = 9;
+    workCell.textContent = ""; // Пользователь вписывает вручную
     row.appendChild(workCell);
 
-    // Ячейка компенсации
-    const moneyCell = document.createElement("td");
-    row.appendChild(moneyCell);
+    // Ячейка "Сумма компенсации"
+    const sumCell = document.createElement("td");
+    sumCell.contentEditable = "true"; // Можно редактировать прямо в таблице
+    sumCell.addEventListener("input", updateTotal); // Пересчет при изменении
+    row.appendChild(sumCell);
 
-    // Ячейка уволен/наказан
-    const punishCell = document.createElement("td");
-    row.appendChild(punishCell);
+    // Ячейка "Уволен / Наказан"
+    const statusCell = document.createElement("td");
+    statusCell.textContent = "";
+    row.appendChild(statusCell);
 
-    // Добавляем строку в таблицу
-    table.appendChild(row);
+    tbody.appendChild(row);
   }
+
+  updateTotal(); // Считаем сумму при генерации
 }
 
-// Обработчики смены месяца и года
-monthSelect.addEventListener("change", () => {
-  generateTable(parseInt(yearSelect.value), parseInt(monthSelect.value));
-});
-yearSelect.addEventListener("change", () => {
-  generateTable(parseInt(yearSelect.value), parseInt(monthSelect.value));
-});
+// Функция подсчета суммы
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll("#reportTable tbody tr td:nth-child(3)").forEach(cell => {
+    const value = parseFloat(cell.textContent) || 0;
+    total += value;
+  });
+  document.getElementById("totalSum").textContent = total.toFixed(2);
+}
 
-// Генерация таблицы при загрузке (сентябрь 2025)
-generateTable(2025, 8);
+// При загрузке страницы сразу строим таблицу
+window.onload = generateTable;

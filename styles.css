@@ -1,86 +1,51 @@
-/* Общий стиль страницы */
-body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: #f4f6fa;
-  margin: 20px;
-}
-
-/* Блок выбора месяца и года */
-.controls {
-  margin-bottom: 15px; /* Отступ снизу */
-  font-size: 16px;
-}
-.controls label {
-  margin-right: 8px;
-  font-weight: bold;
-}
-.controls select {
-  margin-right: 20px;
-  padding: 4px 8px;
-  font-size: 15px;
-}
-
-/* Таблица */
+/* Стили для таблицы */
 table {
-  border-collapse: collapse;
-  width: 100%;
-  background: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  overflow: hidden;
+  width: 100%; /* Таблица растягивается на всю ширину */
+  border-collapse: collapse; /* Убираем двойные границы */
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
 }
 
-/* Первая строка (верхний заголовок) */
-.header {
-  background: #2b4c7e; /* Тёмно-синий */
-  color: white;
-  font-size: 18px;
+/* Шапка таблицы */
+thead tr {
+  background: #2c4e91; /* Синий оттенок */
+  color: white; /* Белый текст */
   font-weight: bold;
-  text-align: center;
-  padding: 12px;
 }
 
-/* Вторая строка заголовков */
-th {
-  background: #3a5d95; /* Более светлый синий */
-  color: white;
-  padding: 10px;
-  border: 1px solid #2b4c7e;
-}
-
-/* Колонка с датами */
-.date-col, td:first-child {
-  width: 60px;
-  text-align: center;
-  vertical-align: middle;
+/* Строка "Итого" */
+tfoot tr {
+  background: #d9e6f2; /* Светло-синий оттенок */
   font-weight: bold;
-  border-right: 1px solid #ddd;
 }
 
-/* Основная колонка работы */
-.work-col {
-  width: 65%;
-}
-
-/* Колонка компенсаций */
-.money-col {
-  width: 15%;
-}
-
-/* Колонка уволен/наказан */
-.punish-col {
-  width: 15%;
-}
-
-/* Обычные ячейки */
-td {
+/* Ячейки */
+th, td {
+  border: 1px solid #999;
   padding: 8px;
-  border: 1px solid #ddd;
+  text-align: center;
 }
 
-/* Выходные — красным */
+/* Первый столбец (с датами) — делаем уже */
+td:first-child, th:first-child {
+  width: 80px;
+}
+
+/* Второй столбец (работа) — самый широкий */
+td:nth-child(2), th:nth-child(2) {
+  width: 60%;
+  text-align: left;
+  padding-left: 10px;
+}
+
+/* Третий и четвертый столбцы — одинаковой ширины */
+td:nth-child(3), th:nth-child(3),
+td:nth-child(4), th:nth-child(4) {
+  width: 15%;
+}
+
+/* Суббота и воскресенье красные */
 .weekend {
   color: red;
-  font-weight: bold;
 }
 
