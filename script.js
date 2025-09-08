@@ -1,71 +1,53 @@
-// ==== Настройки месяца ====
-const year = 2025;      // Год
-const month = 8;        // Месяц (0 = Январь, 8 = Сентябрь, 9 = Октябрь и т.д.)
+// === Функция генерации таблицы ===
+function generateTable() {
+  const tbody = document.getElementById("tableBody"); // Находим тело таблицы
+  const totalCell = document.getElementById("totalCell"); // Ячейка для итога
 
-// ==== Получаем таблицу ====
-const table = document.getElementById("reportTable");
-const totalRow = table.querySelector(".total").closest("tr");
+  tbody.innerHTML = ""; // Очищаем тело таблицы (если уже что-то было)
+  let total = 0; // Переменная для общей суммы компенсаций
 
-// ==== Узнаём количество дней в месяце ====
-const daysInMonth = new Date(year, month + 1, 0).getDate(); 
-// new Date(year, month+1, 0) → последний день месяца
+  const year = 2025; // Год
+  const month = 8; // Месяц (0 = январь → 8 = сентябрь)
+  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Кол-во дней в месяце
 
-// ==== Названия месяцев ====
-const monthNames = [
-  "январь", "февраль", "март", "апрель", "май", "июнь",
-  "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
-];
+  // Цикл по всем дням месяца
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day); // Создаем дату
+    const weekday = date.getDay(); // Определяем день недели (0=вс, 6=сб)
 
-// ==== Подставляем месяц и год в заголовок ====
-document.getElementById("monthName").textContent = monthNames[month];
-document.getElementById("year").textContent = year;
+    const tr = document.createElement("tr"); // Создаем строку
 
-// ==== Генерация строк таблицы ====
-for (let day = 1; day <= daysInMonth; day++) {
-  const newRow = table.insertRow(totalRow.rowIndex);
+    // === Ячейка "День" ===
+    const tdDay = document.createElement("td");
+    tdDay.textContent = day; // Записываем число месяца
+    if (weekday === 0 || weekday === 6) tdDay.classList.add("red"); // Если суббота/воскресенье → красный
+    tr.appendChild(tdDay); // Добавляем в строку
 
-  // Дата
-  const dateCell = newRow.insertCell();
-  dateCell.textContent = day;
+    // === Ячейка "Проделанная работа" ===
+    const tdWork = document.createElement("td");
+    tdWork.textContent = ""; // Оставляем пустым (для заполнения вручную)
+    if (weekday === 0 || weekday === 6) tdWork.classList.add("red"); // Красим выходные
+    tr.appendChild(tdWork);
 
-  // Проверяем день недели (0 = вс, 6 = сб)
-  const weekday = new Date(year, month, day).getDay();
-  if (weekday === 0 || weekday === 6) {
-    dateCell.classList.add("weekend"); // Красим выходные
+    // === Ячейка "Сумма компенсации" ===
+    const tdMoney = document.createElement("td");
+    tdMoney.textContent = ""; // Сумма (пока пусто, можно вписывать вручную)
+    tdMoney.classList.add("money"); // Стилизация для чисел
+    if (weekday === 0 || weekday === 6) tdMoney.classList.add("red"); // Красим выходные
+    tr.appendChild(tdMoney);
+
+    // === Ячейка "Уволен, наказан..." ===
+    const tdFired = document.createElement("td");
+    tdFired.textContent = ""; // Пусто (для ручного заполнения)
+    if (weekday === 0 || weekday === 6) tdFired.classList.add("red"); // Красим выходные
+    tr.appendChild(tdFired);
+
+    tbody.appendChild(tr); // Добавляем строку в таблицу
   }
 
-  // Проделанная работа
-  const workCell = newRow.insertCell();
-  workCell.classList.add("wide");
-  workCell.innerHTML = ""; // Можно заполнять позже
-
-  // Сумма
-  const sumCell = newRow.insertCell();
-  sumCell.classList.add("money");
-  sumCell.innerHTML = ""; // Суммы добавляются вручную
-
-  // Уволен/наказан
-  const lastCell = newRow.insertCell();
-  lastCell.innerHTML = ""; // Тоже можно заполнять позже
+  // === Итоговая сумма ===
+  totalCell.textContent = total.toLocaleString("ru-RU") + " ₸"; // Вывод суммы (пока 0 ₸)
 }
 
-// ==== Подсчёт суммы TOTAL ====
-function recalcTotal() {
-  const moneyCells = document.querySelectorAll('#reportTable .money:not(.total)');
-  let total = 0;
-
-  moneyCells.forEach(cell => {
-    let value = cell.textContent.replace(/[^\d,]/g, '').replace(',', '.');
-    if (value) total += parseFloat(value);
-  });
-
-  const formattedTotal = total.toLocaleString('ru-RU', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }) + " ₸";
-
-  document.getElementById('totalCell').textContent = formattedTotal;
-}
-
-// Считаем при загрузке
-recalcTotal();
+// === Запускаем функцию при загрузке страницы ===
+generateTable();

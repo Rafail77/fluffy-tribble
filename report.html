@@ -1,42 +1,54 @@
-<!DOCTYPE html> <!-- Указываем браузеру, что это HTML5 -->
-<html lang="ru"> <!-- Указываем язык страницы -->
-<head>
-  <meta charset="UTF-8"> <!-- Кодировка UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Адаптивность для мобильных -->
-  <title>Отчёт за месяц</title> <!-- Заголовок страницы -->
+<!DOCTYPE html> <!-- Указываем, что это HTML5 -->
+<html lang="ru"> <!-- Язык документа: русский -->
 
-  <!-- Подключаем стили -->
+<head>
+  <meta charset="UTF-8"> <!-- Устанавливаем кодировку UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Масштабирование на мобильных -->
+  <title>Отчет за сентябрь 2025</title> <!-- Заголовок вкладки браузера -->
+
+  <!-- Подключение внешнего CSS-файла -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Подключение шрифтов Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&family=DM+Sans&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-  <!-- Таблица для отчёта -->
-  <table id="reportTable">
-    <tr>
-      <!-- Заголовок: объединяем ячейки -->
-      <td colspan="12" class="header">
-        Отчёт о проделанной работе за <span id="monthName"></span> <span id="year"></span> года по г. Астана.  
-        Составитель: Представитель ДБ Хусаинов Р.Р.
-      </td>
-    </tr>
+  <!-- Основная таблица для отчета -->
+  <table id="reportTable"> <!-- ID нужен для управления из JS -->
+    <thead>
+      <!-- Первая строка шапки (объединённая) -->
+      <tr>
+        <th colspan="4" class="header">
+          Отчет о проделанной работе за сентябрь 2025 года по г. Астана.<br> <!-- Текст заголовка -->
+          Составитель: Представитель ДБ Хусаинов Р.Р.
+        </th>
+      </tr>
 
-    <tr>
-      <!-- Заголовки столбцов -->
-      <th class="narrow">День</th> <!-- Узкая колонка для дат -->
-      <th class="wide">Проделанная работа</th> <!-- Широкая колонка -->
-      <th class="narrow">Сумма компенсации</th> <!-- Уже -->
-      <th class="narrow">Уволен, наказан</th> <!-- Уже -->
-    </tr>
+      <!-- Вторая строка шапки с названиями колонок -->
+      <tr>
+        <th class="narrow">День</th> <!-- Узкая колонка для чисел -->
+        <th>Проделанная работа</th> <!-- Основная широкая колонка -->
+        <th>Сумма компенсации</th> <!-- Средняя колонка -->
+        <th>Уволен, наказан, лишён премий</th> <!-- Средняя колонка -->
+      </tr>
+    </thead>
 
-    <!-- Строки будут добавлены через JS -->
-    <tr>
-      <td colspan="2" class="total">ИТОГО:</td> <!-- Объединяем 2 ячейки -->
-      <td id="totalCell" class="money total">0 ₸</td> <!-- Общая сумма -->
-      <td></td> <!-- Пустая ячейка -->
-    </tr>
+    <!-- Тело таблицы (заполняется автоматически через JS) -->
+    <tbody id="tableBody"></tbody>
+
+    <!-- Итоговая строка -->
+    <tfoot>
+      <tr>
+        <td colspan="2" class="total">ИТОГО:</td> <!-- Текстовое поле итогов -->
+        <td id="totalCell" class="money total">0 ₸</td> <!-- Сумма итогов (считается в JS) -->
+        <td></td> <!-- Пустая ячейка -->
+      </tr>
+    </tfoot>
   </table>
 
-  <!-- Подключаем JS -->
+  <!-- Подключение JS-файла -->
   <script src="script.js"></script>
 </body>
 </html>

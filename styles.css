@@ -1,51 +1,79 @@
-/* ---- Общие стили таблицы ---- */
+/* === Общий стиль страницы === */
+body {
+  font-family: 'DM Sans', sans-serif; /* Основной шрифт */
+  background: #f9f9f9; /* Светлый фон */
+  padding: 20px; /* Отступы вокруг содержимого */
+}
+
+/* === Общий стиль таблицы === */
 table {
-  width: 100%;                  /* Таблица растягивается на всю ширину */
-  border-collapse: collapse;    /* Убираем двойные линии */
-  margin-top: 20px;             /* Отступ сверху */
-  font-family: Arial, sans-serif; /* Основной шрифт */
-  font-size: 14px;              /* Размер текста */
+  width: 100%; /* Растянуть таблицу на всю ширину */
+  border-collapse: collapse; /* Убираем двойные линии */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Легкая тень */
+  background: #fff; /* Белый фон */
+  border-radius: 10px; /* Скругленные углы */
+  overflow: hidden; /* Чтобы скругления работали */
 }
 
-th, td {
-  border: 1px solid #444;       /* Тонкая чёрная рамка */
-  padding: 6px;                 /* Отступ внутри ячеек */
-  vertical-align: top;          /* Выравнивание по верхнему краю */
-  text-align: left;             /* Выравнивание текста по левому краю */
+/* === Заголовки таблицы === */
+thead th {
+  padding: 12px; /* Отступы внутри ячеек */
+  background: linear-gradient(to bottom, #f1f1f1, #e1e1e1); /* Градиент */
+  text-align: center; /* Текст по центру */
+  font-weight: bold; /* Жирный текст */
+  border: 1px solid #ccc; /* Серая рамка */
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), inset 0 -2px 4px rgba(0,0,0,0.1); /* Внутренняя тень (объем) */
 }
 
-/* ---- Шапка ---- */
-.header {
-  background: #f0e68c;          /* Жёлтый фон */
-  font-weight: bold;            /* Жирный текст */
-  text-align: center;           /* Текст по центру */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Тень для объёма */
+/* === Первая строка шапки (основной заголовок) === */
+thead .header {
+  font-size: 16px; /* Чуть крупнее шрифт */
+  background: linear-gradient(to bottom, #e8e8e8, #d0d0d0); /* Более контрастный градиент */
+  box-shadow: inset 0 3px 6px rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.2); /* Более сильный объем */
+  text-align: center; /* Центрирование */
 }
 
-/* ---- Колонки ---- */
+/* === Узкая колонка (даты) === */
 .narrow {
-  width: 120px;                 /* Узкие колонки (даты, суммы, уволен) */
-  text-align: center;           /* Центрируем текст */
+  width: 60px; /* Фиксированная ширина */
+  text-align: center; /* Цифры по центру */
+  padding: 4px; /* Меньше отступы */
 }
 
-.wide {
-  width: 60%;                   /* Широкая колонка "Проделанная работа" */
+/* === Колонка "Проделанная работа" === */
+thead th:nth-child(2) {
+  width: 60%; /* Самая широкая колонка */
 }
 
-/* ---- День недели красный для выходных ---- */
-.weekend {
-  color: red;                   /* Красный текст для сб/вс */
-  font-weight: bold;            /* Жирный для выделения */
+/* === Остальные колонки (равные) === */
+thead th:nth-child(3),
+thead th:nth-child(4) {
+  width: 20%; /* Равные части */
 }
 
-/* ---- Деньги ---- */
+/* === Ячейки таблицы === */
+td {
+  padding: 6px 10px; /* Внутренние отступы */
+  border: 1px solid #ddd; /* Светлая рамка */
+  text-align: left; /* Текст слева */
+}
+
+/* === Красные дни (суббота, воскресенье) === */
+.red {
+  color: red; /* Красный текст */
+  font-weight: bold; /* Жирный */
+}
+
+/* === Деньги === */
 .money {
-  text-align: right;            /* Выравнивание по правому краю */
-  white-space: nowrap;          /* Запрещаем перенос валюты */
+  text-align: right; /* По правому краю */
+  font-family: 'Roboto', sans-serif; /* Более строгий шрифт */
+  font-weight: bold; /* Жирный */
 }
 
-/* ---- Итог ---- */
-.total {
-  background: #eee;             /* Серый фон */
-  font-weight: bold;            /* Жирный текст */
+/* === Итоговая строка === */
+tfoot td {
+  font-weight: bold; /* Жирный текст */
+  background: #eee; /* Серый фон */
+  border-top: 2px solid #ccc; /* Верхняя линия */
 }
