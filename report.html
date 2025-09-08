@@ -4,33 +4,42 @@
   <meta charset="UTF-8">
   <title>Отчет за месяц</title>
   <link rel="stylesheet" href="styles.css"> <!-- Подключаем CSS -->
+  <!-- Подключаем библиотеку SheetJS для экспорта в Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-  <h2>Отчет о проделанной работе по г. Астана</h2>
+  <!-- Шапка отчета -->
+  <div class="report-header">
+    <h2>Отчет о проделанной работе за <span id="currentMonth">сентябрь</span> <span id="currentYear">2025</span> года по г. Астана.</h2>
+    <p>Составитель: Представитель ДБ Хусаинов Р.Р.</p>
+  </div>
 
   <!-- Блок выбора месяца и года -->
-  <label for="month">Месяц:</label>
-  <select id="month">
-    <option value="8">Сентябрь</option>
-    <option value="9">Октябрь</option>
-    <option value="10">Ноябрь</option>
-  </select>
+  <div class="controls">
+    <label for="month">Месяц:</label>
+    <select id="month">
+      <option value="8">Сентябрь</option>
+      <option value="9">Октябрь</option>
+      <option value="10">Ноябрь</option>
+    </select>
 
-  <label for="year">Год:</label>
-  <select id="year">
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-  </select>
+    <label for="year">Год:</label>
+    <select id="year">
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+    </select>
 
-  <button onclick="generateTable()">Показать</button>
+    <button onclick="generateTable()">Показать</button>
+    <button onclick="exportToExcel()">Скачать в Excel</button>
+  </div>
 
   <!-- Таблица -->
   <table id="reportTable">
     <thead>
       <tr>
         <th>Дата</th> <!-- Первый столбец — даты -->
-        <th>Проделанная работа</th> <!-- Второй столбец — основная часть -->
-        <th>Сумма компенсации</th> <!-- Третий столбец — суммы -->
+        <th>Проделанная работа</th> <!-- Второй столбец -->
+        <th>Сумма компенсации</th> <!-- Третий столбец -->
         <th>Уволен / Наказан</th> <!-- Четвертый столбец -->
       </tr>
     </thead>
@@ -40,7 +49,7 @@
     <tfoot>
       <tr>
         <td colspan="2" style="text-align:right; font-weight:bold;">Итого:</td>
-        <td id="totalSum">0</td> <!-- Здесь будет выводиться сумма -->
+        <td id="totalSum">0</td>
         <td></td>
       </tr>
     </tfoot>

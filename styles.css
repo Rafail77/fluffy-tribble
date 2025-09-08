@@ -1,19 +1,43 @@
-/* Стили для таблицы */
-table {
-  width: 100%; /* Таблица растягивается на всю ширину */
-  border-collapse: collapse; /* Убираем двойные границы */
-  margin-top: 20px;
+/* Общие стили */
+body {
   font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
-/* Шапка таблицы */
+/* Шапка отчета */
+.report-header {
+  text-align: center; /* По центру */
+  margin-bottom: 20px;
+}
+.report-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.report-header p {
+  margin: 5px 0 15px 0;
+  font-style: italic;
+}
+
+/* Панель управления */
+.controls {
+  margin-bottom: 15px;
+}
+
+/* Таблица */
+table {
+  width: 100%; /* Растягивается */
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+/* Заголовок таблицы */
 thead tr {
-  background: #2c4e91; /* Синий оттенок */
-  color: white; /* Белый текст */
+  background: #2c4e91; /* Темно-синий оттенок */
+  color: white;
   font-weight: bold;
 }
 
-/* Строка "Итого" */
+/* Итоговая строка */
 tfoot tr {
   background: #d9e6f2; /* Светло-синий оттенок */
   font-weight: bold;
@@ -26,19 +50,20 @@ th, td {
   text-align: center;
 }
 
-/* Первый столбец (с датами) — делаем уже */
+/* Первый столбец (даты) — уже */
 td:first-child, th:first-child {
   width: 80px;
+  text-align: center; /* По центру */
 }
 
-/* Второй столбец (работа) — самый широкий */
+/* Второй столбец — широкий */
 td:nth-child(2), th:nth-child(2) {
   width: 60%;
   text-align: left;
   padding-left: 10px;
 }
 
-/* Третий и четвертый столбцы — одинаковой ширины */
+/* Третий и четвертый — одинаковые */
 td:nth-child(3), th:nth-child(3),
 td:nth-child(4), th:nth-child(4) {
   width: 15%;
