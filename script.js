@@ -1,75 +1,91 @@
-// Названия месяцев для отображения в шапке
+// ==== Настройки ====
 const monthNames = [
-  "январь", "февраль", "март", "апрель", "май", "июнь",
-  "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
+  "январь","февраль","март","апрель","май","июнь",
+  "июль","август","сентябрь","октябрь","ноябрь","декабрь"
 ];
 
-// Генерация таблицы
+// ==== Элементы ====
+const table = document.getElementById('reportTable');
+const tbody = table.querySelector('tbody');
+const totalCell = document.getElementById('totalCell');
+const monthSelect = document.getElementById('month');
+const yearSelect = document.getElementById('year');
+const headerMonth = document.getElementById('headerMonth');
+const headerYear = document.getElementById('headerYear');
+const applyBtn = document.getElementById('applyBtn');
+const downloadBtn = document.getElementById('downloadExcel');
+
+// ==== Функции ====
+function formatMoneyKZT(value) {
+  return value.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₸';
+}
+function parseMoney(str) {
+  if (!str) return 0;
+  const cleaned = str.replace(/[^\d,.\-]/g, '').replace(',', '.');
+  const num = parseFloat(cleaned);
+  return isNaN(num) ? 0 : num;
+}
+function isWeekend(date) {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
+// ==== Генерация таблицы ====
 function generateTable() {
-  const month = parseInt(document.getElementById("month").value); // выбранный месяц
-  const year = parseInt(document.getElementById("year").value);   // выбранный год
+  const month = parseInt(monthSelect.value, 10);
+  const year = parseInt(yearSelect.value, 10);
 
-  // Обновляем шапку отчета
-  document.getElementById("currentMonth").textContent = monthNames[month];
-  document.getElementById("currentYear").textContent = year;
+  headerMonth.textContent = monthNames[month];
+  headerYear.textContent = year;
 
-  const tbody = document.querySelector("#reportTable tbody");
-  tbody.innerHTML = ""; // очищаем старые строки
-
-  const daysInMonth = new Date(year, month + 1, 0).getDate(); // количество дней
+  tbody.innerHTML = '';
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month, day);
-    const dayOfWeek = date.getDay(); // день недели (0 - воскресенье, 6 - суббота)
+    const tr = document.createElement('tr');
+    if (isWeekend(date)) tr.classList.add('weekend-row');
 
-    const row = document.createElement("tr");
+    const tdDate = document.createElement('td');
+    tdDate.textContent = day;
+    tr.appendChild(tdDate);
 
-    // Дата
-    const dateCell = document.createElement("td");
-    dateCell.textContent = day;
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      dateCell.classList.add("weekend"); // выходные красным
-    }
-    row.appendChild(dateCell);
+    const tdWork = document.createElement('td');
+    tr.appendChild(tdWork);
 
-    // Работа
-    const workCell = document.createElement("td");
-    workCell.textContent = "";
-    row.appendChild(workCell);
+    const tdSum = document.createElement('td');
+    tdSum.contentEditable = 'true';
+    tdSum.classList.add('editable');
+    tdSum.addEventListener('input', updateTotal);
+    tr.appendChild(tdSum);
 
-    // Сумма компенсации
-    const sumCell = document.createElement("td");
-    sumCell.contentEditable = "true"; // редактируемое поле
-    sumCell.addEventListener("input", updateTotal); // пересчет
-    row.appendChild(sumCell);
+    const tdStatus = document.createElement('td');
+    tr.appendChild(tdStatus);
 
-    // Уволен / Наказан
-    const statusCell = document.createElement("td");
-    statusCell.textContent = "";
-    row.appendChild(statusCell);
-
-    tbody.appendChild(row);
+    tbody.appendChild(tr);
   }
-
-  updateTotal(); // считаем сумму
+  updateTotal();
 }
 
-// Подсчет суммы
+// ==== Пересчёт итогов ====
 function updateTotal() {
   let total = 0;
-  document.querySelectorAll("#reportTable tbody tr td:nth-child(3)").forEach(cell => {
-    const value = parseFloat(cell.textContent) || 0;
-    total += value;
-  });
-  document.getElementById("totalSum").textContent = total.toFixed(2);
+  const sumCells = table.querySelectorAll('tbody td:nth-child(3)');
+  sumCells.forEach(cell => total += parseMoney(cell.textContent));
+  totalCell.textContent = formatMoneyKZT(total);
 }
 
-// Экспорт в Excel
+// ==== Экспорт в Excel ====
 function exportToExcel() {
-  const table = document.getElementById("reportTable"); // берем таблицу
-  const wb = XLSX.utils.table_to_book(table, {sheet:"Отчет"}); // создаем книгу
-  XLSX.writeFile(wb, "Отчет.xlsx"); // скачиваем
+  const wb = XLSX.utils.table_to_book(table, { sheet: "Отчёт" });
+  XLSX.writeFile(wb, `Отчет_${headerMonth.textContent}_${headerYear.textContent}.xlsx`);
 }
 
-// При загрузке страницы сразу строим таблицу
-window.onload = generateTable;
+// ==== Слушатели ====
+applyBtn.addEventListener('click', generateTable);
+monthSelect.addEventListener('change', generateTable);
+yearSelect.addEventListener('change', generateTable);
+downloadBtn.addEventListener('click', exportToExcel);
+
+// ==== Старт ====
+window.addEventListener('DOMContentLoaded', generateTable);

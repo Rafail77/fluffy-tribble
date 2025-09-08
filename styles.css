@@ -1,76 +1,58 @@
-/* Общие стили */
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
+/* База */
+* { box-sizing: border-box; }
+body { margin: 20px; font-family: Arial, sans-serif; }
 
-/* Шапка отчета */
+/* Шапка */
 .report-header {
-  text-align: center; /* По центру */
-  margin-bottom: 20px;
+  background: linear-gradient(145deg, #eaf3ff, #d2e4fb);
+  border: 1px solid #a7c4ea;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+  text-align: center;
+  margin-bottom: 16px;
 }
-.report-header h2 {
-  margin: 0;
-  font-size: 20px;
-}
-.report-header p {
-  margin: 5px 0 15px 0;
-  font-style: italic;
-}
+.report-title { margin: 0; color: #1f3f7a; font-weight: 700; }
+.report-author { margin: 6px 0 0; color: #2f5a9b; font-style: italic; }
 
-/* Панель управления */
-.controls {
-  margin-bottom: 15px;
-}
+/* Панель */
+.controls { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.controls select, .controls button { padding: 6px 10px; }
 
 /* Таблица */
-table {
-  width: 100%; /* Растягивается */
+#reportTable {
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  table-layout: fixed;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 
-/* Заголовок таблицы */
-thead tr {
-  background: #2c4e91; /* Темно-синий оттенок */
-  color: white;
-  font-weight: bold;
-}
+/* Ширины колонок */
+.col-date { width: 6%; }  /* Уже чем было */
+.col-work { width: 62%; }
+.col-sum { width: 16%; }
+.col-status { width: 16%; }
 
-/* Итоговая строка */
-tfoot tr {
-  background: #d9e6f2; /* Светло-синий оттенок */
-  font-weight: bold;
-}
+/* Шапка таблицы */
+thead tr { background: #2b5196; color: #fff; }
+th { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; }
+.work-head { text-align: center; }
 
-/* Ячейки */
-th, td {
-  border: 1px solid #999;
-  padding: 8px;
-  text-align: center;
-}
+/* Тело */
+td { border: 1px solid #cfd7e6; padding: 8px; }
+td:first-child { text-align: center; }
+td:nth-child(2) { text-align: left; }
+tr.weekend-row td { color: #c62828; } /* Красный выходным */
 
-/* Первый столбец (даты) — уже */
-td:first-child, th:first-child {
-  width: 80px;
-  text-align: center; /* По центру */
-}
+/* Итог */
+tfoot tr { background: #e8f1ff; }
+tfoot td { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; }
+.total-label { text-align: right; }
+.total-sum { text-align: right; }
 
-/* Второй столбец — широкий */
-td:nth-child(2), th:nth-child(2) {
-  width: 60%;
-  text-align: left;
-  padding-left: 10px;
-}
-
-/* Третий и четвертый — одинаковые */
-td:nth-child(3), th:nth-child(3),
-td:nth-child(4), th:nth-child(4) {
-  width: 15%;
-}
-
-/* Суббота и воскресенье красные */
-.weekend {
-  color: red;
-}
-
+/* Редактируемые ячейки */
+.editable { outline: none; }
+.editable:focus { background: #fffbe6; }

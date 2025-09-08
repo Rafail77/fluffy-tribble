@@ -1,60 +1,82 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html> <!-- HTML5 -->
+<html lang="ru"> <!-- Русский язык -->
 <head>
-  <meta charset="UTF-8">
-  <title>Отчет за месяц</title>
+  <meta charset="UTF-8"> <!-- Кодировка -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Адаптив -->
+  <title>Отчёт за месяц</title> <!-- Заголовок вкладки -->
   <link rel="stylesheet" href="styles.css"> <!-- Подключаем CSS -->
-  <!-- Подключаем библиотеку SheetJS для экспорта в Excel -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-  <!-- Шапка отчета -->
+
+  <!-- Выпуклая красивая шапка -->
   <div class="report-header">
-    <h2>Отчет о проделанной работе за <span id="currentMonth">сентябрь</span> <span id="currentYear">2025</span> года по г. Астана.</h2>
-    <p>Составитель: Представитель ДБ Хусаинов Р.Р.</p>
+    <h2 class="report-title">
+      Отчет о проделанной работе за <span id="headerMonth">сентябрь</span> <span id="headerYear">2025</span> года по г. Астана.
+    </h2>
+    <p class="report-author">Составитель: Представитель ДБ Хусаинов Р.Р.</p>
   </div>
 
-  <!-- Блок выбора месяца и года -->
+  <!-- Панель управления -->
   <div class="controls">
     <label for="month">Месяц:</label>
     <select id="month">
-      <option value="8">Сентябрь</option>
+      <option value="0">Январь</option>
+      <option value="1">Февраль</option>
+      <option value="2">Март</option>
+      <option value="3">Апрель</option>
+      <option value="4">Май</option>
+      <option value="5">Июнь</option>
+      <option value="6">Июль</option>
+      <option value="7">Август</option>
+      <option value="8" selected>Сентябрь</option>
       <option value="9">Октябрь</option>
       <option value="10">Ноябрь</option>
+      <option value="11">Декабрь</option>
     </select>
 
     <label for="year">Год:</label>
     <select id="year">
-      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2025" selected>2025</option>
       <option value="2026">2026</option>
+      <option value="2027">2027</option>
     </select>
 
-    <button onclick="generateTable()">Показать</button>
-    <button onclick="exportToExcel()">Скачать в Excel</button>
+    <button id="applyBtn">Показать</button> <!-- Перестроить таблицу -->
+    <button id="downloadExcel">📥 Скачать в Excel</button> <!-- Экспорт в Excel -->
   </div>
 
-  <!-- Таблица -->
+  <!-- Таблица отчёта -->
   <table id="reportTable">
+    <colgroup> <!-- Контроль ширины -->
+      <col class="col-date"> <!-- Узкая дата -->
+      <col class="col-work"> <!-- Проделанная работа -->
+      <col class="col-sum"> <!-- Сумма -->
+      <col class="col-status"> <!-- Уволен/наказан -->
+    </colgroup>
     <thead>
       <tr>
-        <th>Дата</th> <!-- Первый столбец — даты -->
-        <th>Проделанная работа</th> <!-- Второй столбец -->
-        <th>Сумма компенсации</th> <!-- Третий столбец -->
-        <th>Уволен / Наказан</th> <!-- Четвертый столбец -->
+        <th>Дата</th>
+        <th class="work-head">Проделанная работа</th>
+        <th>Сумма компенсации</th>
+        <th>Уволен / наказан</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Здесь JS сгенерирует строки по дням -->
+      <!-- Заполняется JS -->
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="2" style="text-align:right; font-weight:bold;">Итого:</td>
-        <td id="totalSum">0</td>
+        <td></td>
+        <td class="total-label">Итого:</td>
+        <td id="totalCell" class="total-sum">0 ₸</td>
         <td></td>
       </tr>
     </tfoot>
   </table>
 
-  <script src="script.js"></script> <!-- Подключаем JS -->
+  <!-- Подключаем JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> <!-- Библиотека для Excel -->
+  <script src="script.js"></script>
 </body>
 </html>
