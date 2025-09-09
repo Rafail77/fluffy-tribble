@@ -31,14 +31,14 @@ body { margin: 20px; font-family: Arial, sans-serif; }
 }
 
 /* Ширины колонок */
-.col-date { width: 6%; }  /* Уже чем было */
-.col-work { width: 62%; }
+.col-date { width: 5%; }   /* Сделал ещё меньше */
+.col-work { width: 63%; }
 .col-sum { width: 16%; }
 .col-status { width: 16%; }
 
 /* Шапка таблицы */
 thead tr { background: #2b5196; color: #fff; }
-th { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; }
+th { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; text-align: center; }
 .work-head { text-align: center; }
 
 /* Тело */

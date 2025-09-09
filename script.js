@@ -12,7 +12,6 @@ const monthSelect = document.getElementById('month');
 const yearSelect = document.getElementById('year');
 const headerMonth = document.getElementById('headerMonth');
 const headerYear = document.getElementById('headerYear');
-const applyBtn = document.getElementById('applyBtn');
 const downloadBtn = document.getElementById('downloadExcel');
 
 // ==== Функции ====
@@ -56,7 +55,15 @@ function generateTable() {
     const tdSum = document.createElement('td');
     tdSum.contentEditable = 'true';
     tdSum.classList.add('editable');
-    tdSum.addEventListener('input', updateTotal);
+    tdSum.addEventListener('blur', () => {
+      let val = parseMoney(tdSum.textContent);
+      if (val > 0) {
+        tdSum.textContent = formatMoneyKZT(val);
+      } else {
+        tdSum.textContent = "";
+      }
+      updateTotal();
+    });
     tr.appendChild(tdSum);
 
     const tdStatus = document.createElement('td');
@@ -78,11 +85,12 @@ function updateTotal() {
 // ==== Экспорт в Excel ====
 function exportToExcel() {
   const wb = XLSX.utils.table_to_book(table, { sheet: "Отчёт" });
-  XLSX.writeFile(wb, `Отчет_${headerMonth.textContent}_${headerYear.textContent}.xlsx`);
+  const month = headerMonth.textContent.charAt(0).toUpperCase() + headerMonth.textContent.slice(1);
+  const filename = `Отчет_${month}_${headerYear.textContent}.xlsx`;
+  XLSX.writeFile(wb, filename);
 }
 
 // ==== Слушатели ====
-applyBtn.addEventListener('click', generateTable);
 monthSelect.addEventListener('change', generateTable);
 yearSelect.addEventListener('change', generateTable);
 downloadBtn.addEventListener('click', exportToExcel);
