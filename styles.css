@@ -1,43 +1,49 @@
-/* ====== Базовые правила ====== */
-* { box-sizing: border-box; } /* Устанавливаем box-sizing: border-box для всех элементов */ 
-body { margin: 20px; font-family: Arial, sans-serif; } /* Отступы страницы и базовый шрифт */ 
+/* Сброс/база */ 
+* { box-sizing: border-box; } /* Учитываем отступы в ширину */ 
+body { margin: 20px; font-family: Arial, sans-serif; } /* Отступ и основной шрифт */ 
 
-/* ====== Шапка отчёта (выпуклая карточка) ====== */
-.report-header { background: linear-gradient(145deg, #eaf3ff, #d2e4fb); /* Градиентный фон */ border: 1px solid #a7c4ea; /* Рамка */ border-radius: 14px; /* Скругление */ padding: 16px 20px; /* Внутренние отступы */ box-shadow: 0 10px 18px rgba(0,0,0,0.12); /* Тень — делает объём */ text-align: center; /* Центрируем текст */ margin-bottom: 16px; /* Отступ снизу между шапкой и таблицей */ } /* Закрываем .report-header */ 
+/* Выпуклая шапка отчёта */ 
+.report-header { background: linear-gradient(145deg, #eaf3ff, #d2e4fb); /* Градиент фона */ border: 1px solid #a7c4ea; /* Контур */ border-radius: 14px; /* Скругления */ padding: 16px 20px; /* Внутренние отступы */ box-shadow: 0 10px 18px rgba(0,0,0,0.12); /* Тень для объёма */ text-align: center; /* Текст по центру */ margin-bottom: 16px; /* Отступ снизу */ } 
+.report-title { margin: 0; color: #1f3f7a; font-weight: 700; } /* Стиль заголовка */ 
+.report-author { margin: 6px 0 0; color: #2f5a9b; font-style: italic; } /* Автор в курсиве */ 
 
-.report-title { margin: 0; color: #1f3f7a; font-weight: 700; } /* Стили заголовка (жирный, цвет) */ 
-.report-author { margin: 6px 0 0; color: #2f5a9b; font-style: italic; } /* Стили автора (курсив) */ 
+/* Панель управления */ 
+.controls { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; } /* Расположение контролов */ 
+.controls select, .controls button { padding: 6px 10px; } /* Отступы в контролах */ 
 
-/* ====== Панель управления ====== */
-.controls { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; } /* Панель селектов и кнопки */ 
-.controls select, .controls button { padding: 6px 10px; } /* Универсальные отступы для селектов и кнопок */ 
+/* Кнопка-clear — предупреждающая */ 
+.btn-clear { background: linear-gradient(180deg,#ff7b7b,#ff3b3b); /* Красный градиент */ color: #fff; /* Белый текст */ border: 1px solid #b00020; /* Бордюр */ padding: 6px 12px; /* Отступы */ border-radius: 8px; /* Скругление */ cursor: pointer; /* Курсор */ box-shadow: 0 6px 12px rgba(176,0,32,0.25); /* Тень */ font-weight: 700; /* Сделать заметней */ } 
+.btn-clear:hover { transform: translateY(-1px); } /* Лёгкий hover */ 
 
-/* ====== Таблица ====== */
-#reportTable { width: 100%; /* Занимает всю доступную ширину */ border-collapse: collapse; /* Убираем двойные границы */ table-layout: fixed; /* Фиксированная таблица — colgroup соблюдается */ background: #fff; /* Белый фон таблицы */ border-radius: 10px; /* Скругление краёв */ overflow: hidden; /* Обрезаем тень и скругления */ box-shadow: 0 6px 14px rgba(0,0,0,0.08); /* Тень у таблицы */ } 
+/* Таблица */ 
+#reportTable { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 14px rgba(0,0,0,0.08); } /* Основные свойства таблицы */ 
 
-/* ====== Ширины колонок через colgroup ====== */
-.col-date { width: 60px; } /* Фиксированная узкая ширина для колонки даты (60px) */ 
-.col-work { width: calc(100% - 60px - 320px); } /* Работа занимает основную часть (авто) */ 
-.col-sum { width: 160px; } /* Ширина столбца сумма (фиксирована 160px) */ 
-.col-status { width: 160px; } /* Ширина столбца статус (такая же, как сумма) */ 
+/* Ширины колонок */ 
+.col-date { width: 5%; }  /* Первая колонка с датой — уже */ 
+.col-work { width: 63%; } /* "Проделанная работа" — большая */ 
+.col-sum { width: 16%; }  /* Суммы */ 
+.col-status { width: 16%; } /* Статусы — такая же ширина как суммы */ 
 
-/* ====== Заголовок таблицы (thead) ====== */
-thead tr { background: #2b5196; color: #fff; } /* Темно-синий фон для шапки таблицы */ 
-th { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; } /* Стили для всех th */ 
-.work-head { text-align: center; } /* Центрируем название колонки "Проделанная работа" */ 
+/* Шапка таблицы */ 
+thead tr { background: #2b5196; color: #fff; } /* Тёмно-синий фон шапки */ 
+th { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; } /* Стиль th */ 
+.work-head { text-align: center; } /* Название колонки работы по центру */ 
 
-/* ====== Тело таблицы (tbody) ====== */
-td { border: 1px solid #cfd7e6; padding: 8px; } /* Базовые стили для ячеек */ 
-td:first-child { text-align: center; padding: 6px 4px; font-weight: 700; /* Чуть жирнее цифры */ text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.12); /* Тень для объёмного эффекта */ } /* Делаем цифры в первой колонке "выпуклыми" */ 
-td:nth-child(2) { text-align: left; } /* Колонка "Проделанная работа" — по левому краю */ 
-tr.weekend-row td { color: #c62828; } /* Красный цвет текста для всех ячеек строки, если это выходной */ 
+/* Тело таблицы */ 
+td { border: 1px solid #cfd7e6; padding: 8px; } /* Ячейки */ 
+td:first-child { text-align: center; padding-left: 4px; padding-right: 4px; } /* Дата по центру и с малыми внутренними отступами */ 
+td:nth-child(2) { text-align: left; } /* Колонка работы — слева */ 
+tr.weekend-row td { color: #c62828; } /* Выходные — красным */ 
 
-/* ====== Итоговая строка (tfoot) ====== */
-tfoot tr { background: #e8f1ff; } /* Светло-голубой фон итоговой строки */ 
-tfoot td { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; } /* Стили для ячеек футера */ 
-.total-label { text-align: right; } /* Текст "Итого:" выровнен по правому краю */ 
-.total-sum { text-align: right; } /* Итоговая сумма выровнена справа */ 
+/* Сделать суммы визуально "объёмнее" */ 
+td:nth-child(3), .total-sum { font-weight: 700; text-shadow: 0 1px 0 rgba(255,255,255,0.65), 0 -1px 6px rgba(0,0,0,0.06); } /* Немного выпуклые цифры */ 
 
-/* ====== Редактируемые ячейки (сумма) ====== */
-.editable { outline: none; } /* Убираем стандартный outline при фокусе */ 
-.editable:focus { background: #fffbe6; } /* Подсветка редактируемой ячейки при фокусе */ 
+/* Итог */ 
+tfoot tr { background: #e8f1ff; } /* Нежно-голубой фон для итоговой строки */ 
+tfoot td { border: 1px solid #c9d6ec; padding: 8px; font-weight: 700; } /* Стиль ячеек итога */ 
+.total-label { text-align: right; } /* "Итого:" справа */ 
+.total-sum { text-align: right; } /* Итог по правому краю */ 
+
+/* Редактируемые ячейки */ 
+.editable { outline: none; } /* Убираем стандартную обводку */ 
+.editable:focus { background: #fffbe6; } /* Подсветка при редактировании */ 
