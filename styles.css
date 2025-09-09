@@ -31,7 +31,7 @@ body { margin: 20px; font-family: Arial, sans-serif; }
 }
 
 /* Ширины колонок */
-.col-date { width: 5%; }   /* Сделал ещё меньше */
+.col-date { width: 4%; }   /* Сделал ещё меньше */
 .col-work { width: 63%; }
 .col-sum { width: 16%; }
 .col-status { width: 16%; }
