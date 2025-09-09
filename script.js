@@ -1,190 +1,255 @@
-// ==== Названия месяцев (нижний регистр для подстановки, можно капитализировать при нужде) ====
-const monthNames = [ "январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь" ]; // Массив названий месяцев
+// ====== Константы и элементы страницы ======
+const months = [ "Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь" ]; // Названия месяцев с заглавной
 
-// ==== Получаем элементы DOM ====
-const table = document.getElementById('reportTable'); // Таблица по id
-const tbody = table.querySelector('tbody'); // Тело таблицы (куда будут вставляться строки)
+const monthSelect = document.getElementById('monthSelect'); // Элемент селекта месяца
+const yearSelect = document.getElementById('yearSelect'); // Элемент селекта года
+const reportTable = document.getElementById('reportTable'); // Таблица отчёта
+const tbody = reportTable.querySelector('tbody'); // Тело таблицы для вставки строк
+const headerMonth = document.getElementById('headerMonth'); // В шапке — месяц
+const headerYear = document.getElementById('headerYear'); // В шапке — год
 const totalCell = document.getElementById('totalCell'); // Ячейка итоговой суммы
-const monthSelect = document.getElementById('month'); // Селект для месяца
-const yearSelect = document.getElementById('year'); // Селект для года
-const headerMonth = document.getElementById('headerMonth'); // Элемент в заголовке для месяца
-const headerYear = document.getElementById('headerYear'); // Элемент в заголовке для года
-const downloadBtn = document.getElementById('downloadExcel'); // Кнопка скачивания Excel
-const clearBtn = document.getElementById('clearBtn'); // Кнопка очистки месяца
+const downloadBtn = document.getElementById('downloadExcel'); // Кнопка скачивания
+const resetBtn = document.getElementById('resetData'); // Кнопка сброса данных
 
-// ==== Утилиты: форматирование и парсинг сумм ====
-function formatMoneyKZT(value) { // Форматируем число в вид "1 234,00 ₸"
-  return value.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₸'; // Возвращаем строку с символом валюты
-}
-function parseMoney(str) { // Парсим строку (возможно с пробелами, NBSP, ₸, запятыми) в число
-  if (!str) return 0; // Пустая строка → 0
-  // Убираем NBSP и пробелы, удаляем символ ₸, заменяем запятые на точки и оставляем цифры, точку и минус
-  const s = String(str)
-    .replace(/\u00A0/g, '') // Удаляем непереносимый пробел
-    .replace(/\s/g, '')      // Удаляем обычные пробелы
-    .replace(/₸/g, '')       // Удаляем символ тенге если есть
-    .replace(/,/g, '.')      // Заменяем запятую на точку (десятичный разделитель)
-    .replace(/[^\d.\-]/g, ''); // Оставляем только цифры, точку и минус
-  const num = parseFloat(s); // Парсим в число
-  return isNaN(num) ? 0 : num; // Если NaN → 0
+// Текущая дата по умолчанию
+let current = new Date(); // Текущая дата
+let currentMonth = current.getMonth(); // Текущий месяц (0-11)
+let currentYear = current.getFullYear(); // Текущий год (numeric)
+
+// ====== Вспомогательные функции форматирования ======
+function formatMoneyKZT(num) { // Форматирует число -> "1 234 567.00 ₸"
+  if (isNaN(num) || num === null) return "0 ₸"; // Безопасность
+  return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₸"; // Локаль ru-RU
 }
 
-// ==== Проверка выходных (суббота/воскресенье) ====
-function isWeekend(date) { // Принимаем объект Date
-  const day = date.getDay(); // 0 — воскресенье, 6 — суббота
-  return day === 0 || day === 6; // true если weekend
+function parseMoneyToNumber(text) { // Берёт строку вида "1 234,00 ₸" или "1234.5" -> возвращает Number
+  if (!text) return 0; // Пустая строка -> 0
+  // Удаляем всё, кроме цифр, минуса и разделителей точка/запятая
+  const cleaned = String(text).replace(/[^\d\-,.]/g, '').replace(/\s/g, ''); // Убираем валюту и пробелы
+  // Заменим запятую на точку (если есть)
+  const normalized = cleaned.replace(',', '.');
+  const n = parseFloat(normalized); // Парсим в число
+  return isNaN(n) ? 0 : n; // Возвращаем число либо 0
 }
 
-// ==== Работа с localStorage: ключ для текущего месяца/года ====
-function storageKey() { // Формируем ключ localStorage для выбранного месяца и года
-  return `report_${monthSelect.value}_${yearSelect.value}`; // Например report_8_2025
-}
-function saveTableData() { // Сохраняем содержимое таблицы (строки) в localStorage
-  const data = []; // Массив для строк
-  tbody.querySelectorAll('tr').forEach(tr => { // Проходим по каждой строке
-    const row = []; // Массив для ячеек строки
-    tr.querySelectorAll('td').forEach(td => row.push(td.textContent)); // Сохраняем текст каждой ячейки
-    data.push(row); // Добавляем строку
+// ====== Инициализация селектов месяца/года ======
+function fillSelectors() {
+  // Заполняем селект месяцев
+  months.forEach((m, idx) => { // Для каждого месяца
+    const opt = document.createElement('option'); // Создаём option
+    opt.value = idx; // value = индекс месяца
+    opt.textContent = m; // Текст = название месяца
+    if (idx === currentMonth) opt.selected = true; // Выбираем текущий
+    monthSelect.appendChild(opt); // Вставляем в DOM
   });
-  localStorage.setItem(storageKey(), JSON.stringify(data)); // Сохраняем сериализованный массив
+
+  // Заполняем селект годов (по желанию: 2020–2030)
+  for (let y = 2020; y <= 2030; y++) {
+    const opt = document.createElement('option'); // option
+    opt.value = y; // значение = год
+    opt.textContent = y; // текст = год
+    if (y === currentYear) opt.selected = true; // выбираем текущий год
+    yearSelect.appendChild(opt); // вставляем
+  }
 }
-function loadTableData() { // Подгружаем данные из localStorage
-  const saved = localStorage.getItem(storageKey()); // Получаем по ключу
-  return saved ? JSON.parse(saved) : null; // Возвращаем распарсенный объект или null
+
+// ====== Проверка выходного дня (сб/вс) ======
+function isWeekend(year, month, day) {
+  const d = new Date(year, month, day); // создаём объект Date
+  const wd = d.getDay(); // 0 — воскресенье, 6 — суббота
+  return wd === 0 || wd === 6; // true для выходных
 }
 
-// ==== Генерация таблицы для выбранного месяца/года ====
-function generateTable() {
-  const month = parseInt(monthSelect.value, 10); // Текущий месяц (0-11)
-  const year = parseInt(yearSelect.value, 10); // Текущий год
+// ====== Генерация таблицы для выбранного месяца/года ======
+function generateTable(month, year) {
+  // Обновляем заголовок шапки
+  headerMonth.textContent = months[month]; // Пишем месяц
+  headerYear.textContent = year; // Пишем год
 
-  // Обновляем шапку с месяцем и годом
-  headerMonth.textContent = monthNames[month]; // Вставляем название месяца
-  headerYear.textContent = year; // Вставляем год
+  tbody.innerHTML = ''; // Очищаем тело таблицы
 
-  tbody.innerHTML = ''; // Очищаем текущее тело таблицы
+  // Сколько дней в месяце
+  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Последний день месяца
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Количество дней в месяце
-
-  const savedData = loadTableData(); // Пытаемся загрузить ранее сохранённые данные для этого месяца/года
-
-  // Создаём строки по дням
+  // Создаём строки 1..daysInMonth
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day); // Объект даты для проверки выходных
-    const tr = document.createElement('tr'); // Создаём строку
-    if (isWeekend(date)) tr.classList.add('weekend-row'); // Помечаем выходные строкой
+    const tr = document.createElement('tr'); // Новая строка
 
-    // --- Колонка с датой ---
-    const tdDate = document.createElement('td'); // Ячейка даты
-    tdDate.textContent = day; // Записываем номер дня
-    tr.appendChild(tdDate); // Вставляем в строку
+    // Если выходной — добавляем класс для стилей
+    if (isWeekend(year, month, day)) tr.classList.add('weekend'); // Красим выходные
 
-    // --- Колонка "Проделанная работа" ---
-    const tdWork = document.createElement('td'); // Ячейка работы
-    tdWork.contentEditable = 'true'; // Делаем редактируемой
-    tdWork.classList.add('editable'); // Класс для стилей
-    tr.appendChild(tdWork); // Вставляем в строку
+    // --- ячейка даты ---
+    const tdDate = document.createElement('td'); // td
+    tdDate.textContent = day; // число дня
+    tr.appendChild(tdDate); // добавляем в строку
 
-    // --- Колонка "Сумма компенсации" ---
-    const tdSum = document.createElement('td'); // Ячейка суммы
-    tdSum.contentEditable = 'true'; // Делаем редактируемой
-    tdSum.classList.add('editable'); // Класс для стилей
+    // --- ячейка "Проделанная работа" (редактируемая) ---
+    const tdWork = document.createElement('td'); // td
+    tdWork.contentEditable = 'true'; // можно редактировать
+    tdWork.setAttribute('data-type', 'work'); // тип для сохранения
+    tr.appendChild(tdWork); // вставляем в строку
 
-    // При вводе — просто пересчитываем итого и сохраняем (не форматируем чтобы не мешать печати)
-    tdSum.addEventListener('input', () => { updateTotal(); saveTableData(); }); // Input: пересчёт и сохранение
-
-    // При фокусе — показываем «сырой» числовой ввод (удаляем форматирование), чтобы легче редактировать
+    // --- ячейка "Сумма компенсации" (редактируемая; форматируется) ---
+    const tdSum = document.createElement('td'); // td
+    tdSum.contentEditable = 'true'; // можно редактировать
+    tdSum.classList.add('col-money'); // класс для визуала (жирнее, объёмнее)
+    tdSum.setAttribute('data-type', 'sum'); // тип для сохранения
+    // События: фокус (убрать формат), blur (отформатировать), input (проверить ввод и пересчитать)
     tdSum.addEventListener('focus', (e) => {
-      const v = parseMoney(e.target.textContent); // Парсим текущую строку
-      if (v) { e.target.textContent = (v % 1 === 0) ? String(Math.trunc(v)) : String(v); } // Показ целого или дробного числа без разделителей
+      // При фокусе показываем "сырой" числовой вид без разделителей и без ₸, чтобы удобно редактировать
+      const raw = parseMoneyToNumber(e.target.textContent); // парсим текущее содержимое
+      e.target.textContent = raw === 0 ? '' : String(raw); // если 0 -> пустая строка
     });
-
-    // При потере фокуса — форматируем значение в красивый вид "1 234,00 ₸" и сохраняем
     tdSum.addEventListener('blur', (e) => {
-      const v = parseMoney(e.target.textContent); // Парсим введённую строку
-      if (v) { e.target.textContent = formatMoneyKZT(v); } else { e.target.textContent = ''; } // Форматируем или очищаем
-      updateTotal(); // Обновляем итог
-      saveTableData(); // Сохраняем в localStorage
+      // При уходе фокуса форматируем значение (и пересчитываем итог)
+      const n = parseMoneyToNumber(e.target.textContent); // парсим введённое
+      e.target.textContent = formatMoneyKZT(n); // форматируем красиво
+      updateTotal(); // обновляем итоговую сумму
+      saveData(); // сохраняем в localStorage
     });
+    tdSum.addEventListener('input', (e) => {
+      // Во время ввода можно фильтровать лишние символы: оставляем только цифры, точку и запятую и минус
+      const cleaned = e.target.textContent.replace(/[^0-9\.,\-]/g, ''); // убираем всё лишнее
+      if (cleaned !== e.target.textContent) e.target.textContent = cleaned; // если мусор был — удаляем
+      placeCaretAtEnd(e.target); // ставим курсор в конец (если браузер съезжает)
+    });
+    tr.appendChild(tdSum); // вставляем сумму в строку
 
-    tr.appendChild(tdSum); // Вставляем ячейку суммы в строку
+    // --- ячейка "Уволен/наказан" (редактируемая) ---
+    const tdStatus = document.createElement('td'); // td
+    tdStatus.contentEditable = 'true'; // редактируемая
+    tdStatus.setAttribute('data-type', 'status'); // для сохранения
+    tr.appendChild(tdStatus); // вставляем в строку
 
-    // --- Колонка "Уволен/наказан" ---
-    const tdStatus = document.createElement('td'); // Ячейка статуса
-    tdStatus.contentEditable = 'true'; // Можно редактировать
-    tdStatus.classList.add('editable'); // Класс
-    tr.appendChild(tdStatus); // Вставляем в строку
-
-    tbody.appendChild(tr); // Вставляем готовую строку в tbody
+    // Добавляем готовую строку в tbody
+    tbody.appendChild(tr);
   }
 
-  // Если были сохранённые данные, то восстанавливаем их (кроме колонки даты)
-  if (savedData) {
-    tbody.querySelectorAll('tr').forEach((tr, i) => {
-      if (!savedData[i]) return; // Если нет данных для этой строки — пропускаем
-      tr.querySelectorAll('td').forEach((td, j) => {
-        if (j === 0) return; // Не перезаписываем колонку даты
-        td.textContent = savedData[i][j] || ''; // Восстанавливаем значение
-      });
-    });
-  }
-
-  updateTotal(); // После генерации пересчитываем итог
+  // После создания строк загружаем сохранённые данные (если есть) и форматируем суммы
+  loadData(month, year);
+  updateTotal(); // пересчитываем итог
 }
 
-// ==== Пересчёт итоговой суммы (без изменения содержимого ячеек) ====
+// ====== Установка курсора в конец содержимого contentEditable (маленькая утилита) ======
+function placeCaretAtEnd(el) {
+  // Работает для современных браузеров
+  el.focus(); // фокус
+  if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+    const range = document.createRange(); // создаём диапазон
+    range.selectNodeContents(el); // выбираем содержимое
+    range.collapse(false); // в конец
+    const sel = window.getSelection(); // получаем селекцию
+    sel.removeAllRanges(); // очищаем
+    sel.addRange(range); // добавляем наш диапазон
+  }
+}
+
+// ====== Обновление итоговой суммы (суммирование колонки "sum") ======
 function updateTotal() {
-  let total = 0; // Накопитель
-  const sumCells = table.querySelectorAll('tbody td:nth-child(3)'); // Все ячейки сумм (3-я колонка)
-  sumCells.forEach(cell => {
-    total += parseMoney(cell.textContent); // Суммируем парсенные значения
+  let total = 0; // аккумулятор
+  // Берём все td с data-type="sum"
+  tbody.querySelectorAll('td[data-type="sum"]').forEach(td => {
+    const n = parseMoneyToNumber(td.textContent); // парсим значение
+    total += n; // суммируем
+    // если текущее содержимое пустое — оставляем пустым; иначе форматируем (для единообразия)
+    if (td.textContent.trim() !== '') td.textContent = formatMoneyKZT(n);
   });
-  totalCell.textContent = formatMoneyKZT(total); // Записываем красиво форматированный итог
-  // НЕ меняем формат ячеек здесь — форматирование ячеек делается на blur событиях
+  totalCell.textContent = formatMoneyKZT(total); // пишем итог красиво
 }
 
-// ==== Экспорт в Excel с автоматическим именем файла ====
-function capitalizeFirst(s) { // Помощник для капитализации первой буквы
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-function exportToExcel() {
-  const wb = XLSX.utils.table_to_book(table, { sheet: "Отчёт" }); // Преобразуем таблицу в книгу
-  const month = capitalizeFirst(monthNames[parseInt(monthSelect.value, 10)]); // Капитализируем месяц
-  const year = yearSelect.value; // Год
-  const filename = `Отчет_${month}_${year}.xlsx`; // Формируем имя файла
-  XLSX.writeFile(wb, filename); // Сохраняем файл
-}
+// ====== Сохранение данных текущего месяца/года в localStorage ======
+function saveData() {
+  const month = Number(monthSelect.value); // текущий месяц
+  const year = Number(yearSelect.value); // текущий год
 
-// ==== Очистка таблицы для выбранного месяца (с подтверждением) ====
-function clearMonthData() {
-  const month = capitalizeFirst(monthNames[parseInt(monthSelect.value, 10)]); // Текущий месяц
-  const year = yearSelect.value; // Текущий год
-
-  // Показываем стандартный confirm — если пользователь подтвердил, очищаем
-  const confirmMsg = `Вы уверены, что хотите очистить все записи за ${month} ${year}? Это действие нельзя отменить.`; // Текст подтверждения
-  if (!confirm(confirmMsg)) return; // Если отменил — ничего не делаем
-
-  // Удаляем данные из localStorage
-  localStorage.removeItem(storageKey());
-
-  // Очищаем все редактируемые ячейки (кроме даты)
+  // Проходим по всем строкам и собираем данные
+  const data = []; // массив строк
   tbody.querySelectorAll('tr').forEach(tr => {
-    tr.querySelectorAll('td').forEach((td, i) => {
-      if (i === 0) return; // не трогаем дату
-      td.textContent = ''; // очищаем текст
-    });
+    const work = tr.querySelector('td[data-type="work"]').textContent || ''; // работа
+    const sum = tr.querySelector('td[data-type="sum"]').textContent || ''; // сумма (уже форматированная)
+    const status = tr.querySelector('td[data-type="status"]').textContent || ''; // статус
+    data.push({ work, sum, status }); // пушим объект с тремя полями
   });
 
-  updateTotal(); // Обновляем итог после очистки
-  saveTableData(); // Сохраняем (пустую) таблицу
-  alert(`Данные за ${month} ${year} успешно очищены.`); // Уведомление пользователю
+  // Ключ в localStorage уникален по месяцу/году
+  const key = `report-${year}-${month}`;
+  localStorage.setItem(key, JSON.stringify(data)); // сохраняем JSON-строкой
 }
 
-// ==== Слушатели событий ====
-monthSelect.addEventListener('change', generateTable); // При смене месяца — перестраиваем таблицу
-yearSelect.addEventListener('change', generateTable); // При смене года — перестраиваем таблицу
-downloadBtn.addEventListener('click', exportToExcel); // Скачивание Excel
-clearBtn.addEventListener('click', clearMonthData); // Кнопка очистки — обработчик
+// ====== Загрузка данных для указанного месяца/года из localStorage ======
+function loadData(month, year) {
+  const key = `report-${year}-${month}`; // тот же ключ
+  const raw = localStorage.getItem(key); // читаем
+  if (!raw) return; // если ничего нет — выходим
 
-// ==== Инициализация при загрузке страницы ====
-window.addEventListener('DOMContentLoaded', generateTable); // При загрузке DOM генерируем таблицу
+  try {
+    const data = JSON.parse(raw); // парсим
+    // Применяем данные по строкам (если длина совпадает с количеством дней — применим корректно)
+    const rows = tbody.querySelectorAll('tr');
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      const obj = data[i] || {}; // объект с полями или пустой
+      const tdWork = r.querySelector('td[data-type="work"]'); // работа
+      const tdSum = r.querySelector('td[data-type="sum"]'); // сумма
+      const tdStatus = r.querySelector('td[data-type="status"]'); // статус
+
+      if (obj.work !== undefined) tdWork.textContent = obj.work; // ставим текст работы
+      if (obj.sum !== undefined) {
+        // если в сохранении уже был формат — оставляем; иначе форматируем
+        const num = parseMoneyToNumber(obj.sum); // парсим
+        tdSum.textContent = obj.sum.trim() === '' ? '' : formatMoneyKZT(num); // форматируем
+      }
+      if (obj.status !== undefined) tdStatus.textContent = obj.status; // ставим статус
+    }
+  } catch (e) {
+    console.error('Ошибка чтения сохранённых данных', e); // лог в консоль при ошибке
+  }
+}
+
+// ====== Сброс данных для текущего месяца/года (удаление из localStorage) ======
+resetBtn.addEventListener('click', () => {
+  const month = Number(monthSelect.value); // текущий месяц
+  const year = Number(yearSelect.value); // текущий год
+  if (!confirm(`Сбросить данные для ${months[month]} ${year}? Это действие необратимо.`)) return; // подтверждение
+  const key = `report-${year}-${month}`; // ключ
+  localStorage.removeItem(key); // удаляем
+  generateTable(month, year); // перегенерируем таблицу (чистую)
+});
+
+// ====== Экспорт таблицы в Excel (SheetJS) ======
+downloadBtn.addEventListener('click', () => {
+  // Имя файла: Отчет_Месяц_Год.xlsx, месяц с заглавной
+  const month = Number(monthSelect.value);
+  const year = Number(yearSelect.value);
+  const fileName = `Отчет_${months[month]}_${year}.xlsx`; // имя файла
+
+  // Используем SheetJS для конвертации HTML-таблицы в книгу
+  const workbook = XLSX.utils.table_to_book(reportTable, { sheet: "Отчёт" }); // table -> book
+  XLSX.writeFile(workbook, fileName); // Сохраняем файл
+});
+
+// ====== Слушатели селектов: перегенерировать таблицу при смене месяца/года ======
+monthSelect.addEventListener('change', () => {
+  const m = Number(monthSelect.value);
+  const y = Number(yearSelect.value);
+  // обновляем current переменные
+  currentMonth = m;
+  currentYear = y;
+  generateTable(m, y); // создаём таблицу
+});
+yearSelect.addEventListener('change', () => {
+  const m = Number(monthSelect.value);
+  const y = Number(yearSelect.value);
+  currentMonth = m;
+  currentYear = y;
+  generateTable(m, y);
+});
+
+// ====== При загрузке страницы: инициализация селектов и генерация таблицы ======
+document.addEventListener('DOMContentLoaded', () => {
+  fillSelectors(); // заполняем month/year селекты
+  // Пометим селекты на текущие значения
+  monthSelect.value = currentMonth; // выбираем текущий месяц
+  yearSelect.value = currentYear; // выбираем текущий год
+  generateTable(currentMonth, currentYear); // генерируем таблицу по умолчанию
+});
